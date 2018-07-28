@@ -1,0 +1,78 @@
+body {
+  font-family: 'Fira Mono', monospace;
+  background: #ffffff;
+  color: #222222;
+  font-size: 1.6em;
+  line-height: 1.5;
+}
+
+@media (min-width: 64em) {
+  body {
+    font-size: 1.92em;
+    line-height: 1.8;
+  }
+}
+
+@media (min-width: 85.375em) {
+  body {
+    font-size: 2.08em;
+  }
+}
+
+@media (min-width: 120em) {
+  body {
+    font-size: 2.24em;
+  }
+}
+
+@media (min-width: 160em) {
+  body {
+    font-size: 2.56em;
+  }
+}
+
+.container {
+  margin: 0 4%;
+}
+
+@media (min-width: 64em) {
+  .container {
+    margin: 0 8%;
+  }
+}
+
+@media (min-width: 85.375em) {
+  .container {
+    margin: 0 12%;
+  }
+}
+
+@media (min-width: 120em) {
+  .container {
+    margin: 0 18%;
+  }
+}
+
+header {
+  margin: 0 auto;
+}
+
+h1 {
+  font-family: 'PT Mono', monospace;
+  font-size: 4em;
+  margin-left: 1%;
+  padding: .5em 1em;
+  text-decoration: underline;
+}
+
+#todo-list li {
+  padding: 1.5em;
+}
+
+#todo-list li .view button {
+  visibility: hidden;
+}
+
+main #add-todo {
+  margin: 0 auto;
+}
