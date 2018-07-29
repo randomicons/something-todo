@@ -6,10 +6,15 @@ import java.util.*
 
 object Render {
 
+    fun delete(req: Request): String {
+        Todo.deleteById(req.params("id"))
+        return ""
+    }
+
     fun edit(req: Request): String {
         return template("velocity/edittodo.vm", object : HashMap<String, Task>() {
             init {
-                this["todo"] = Todo.getTaskById(req.params("id")) ?: Task("")
+                this["todo"] = Todo.getTaskById(req.params("id"))
             }
         })
     }
@@ -17,7 +22,7 @@ object Render {
     fun task(req: Request): String {
         return template("velocity/task.vm", object : HashMap<String, Task>() {
             init {
-                this["todo"] = Todo.getTaskById(req.params("id")) ?: Task("")
+                this["todo"] = Todo.getTaskById(req.params("id"))
             }
         })
     }

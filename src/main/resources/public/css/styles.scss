@@ -16,9 +16,7 @@ $mq-xxlarge: "(min-width: #{$bp-xxlarge})";
 $mq-retina: "(-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi)";
 $base-line-height: 1.5;
 $header-line-height: 1.25;
-$base-font-size: 1em; 
-
-
+$base-font-size: 1em;
 body {
     font-family: 'Fira Mono', monospace;
     background: #ffffff;
@@ -41,19 +39,16 @@ body {
 }
 
 .container {
-  margin: 0 4%;
-
-  @media #{$mq-medium} {
-    margin: 0 8%;
-  }
-
-  @media #{$mq-large} {
-    margin: 0 12%;
-  }
-
-  @media #{$mq-xlarge} {
-    margin: 0 18%;
-  }
+    margin: 0 4%;
+    @media #{$mq-medium} {
+        margin: 0 8%;
+    }
+    @media #{$mq-large} {
+        margin: 0 12%;
+    }
+    @media #{$mq-xlarge} {
+        margin: 0 18%;
+    }
 }
 
 header {
@@ -70,4 +65,9 @@ h1 {
 
 #todo-list li {
     padding: 1.5em;
+}
+
+.ic-removing {
+    opacity: 0;
+    transition: all 1s ease;
 }

@@ -1,13 +1,7 @@
 import org.apache.velocity.app.Velocity
 import org.apache.velocity.runtime.RuntimeConstants
-import spark.ModelAndView
-import spark.Spark.*
-import spark.template.velocity.VelocityTemplateEngine
-import java.util.*
 import org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader
-import org.apache.velocity.runtime.RuntimeConstants.RESOURCE_LOADER
-
-
+import spark.Spark.*
 
 
 object Main {
@@ -36,12 +30,12 @@ object Main {
         port(herokuAssignedPort)
 
         // Render main UI
-        get("/") { req, res -> Render.main(req)}
+        get("/") { req, res -> Render.main(req) }
 
         // Add new
         post("/todos") { req, res ->
             Render.add(req)
-        //     Render.todos(req)
+            //     Render.todos(req)
         }
 
 //         // Remove all completed
@@ -56,11 +50,11 @@ object Main {
 //             Render.todos(req)
 //         }
 
-//         // Remove by id
-//         delete("/todos/:id") { req, res ->
-// //            TodoDao.remove(req.params("id"))
-//             Render.todos(req)
-//         }
+        // Remove by id
+        delete("/todos/:id") { req, res ->
+            res.header("X-IC-Remove", "1s")
+            Render.delete(req)
+        }
 
 //         // Update by id
 //         put("/todos/:id") { req, res ->
@@ -73,16 +67,12 @@ object Main {
 // //            TodoDao.toggleStatus(req.params("id"))
 //             Render.todos(req)
 //         }
-        get("/todos/:id") {req, _ -> Render.task(req)}
+        get("/todos/:id") { req, _ -> Render.task(req) }
         // Edit by id
-        get("/todos/:id/edit") { req, res ->  Render.edit(req)}
+        get("/todos/:id/edit") { req, res -> Render.edit(req) }
 
 
     }
-
-
-
-
 
 
 }

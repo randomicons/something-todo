@@ -17,6 +17,16 @@ object Todo {
         task.completed = true
     }
 
+    fun delete(task: Task) {
+        list.remove(task)
+    }
+
+    fun deleteById(id: String): Task {
+        val task = getTaskById(id)
+        delete(task)
+        return task
+    }
+
     fun getTask(taskStr: String): Task {
         return if (taskStr.toIntOrNull() != null) {
             list[taskStr.toInt()]
@@ -25,9 +35,9 @@ object Todo {
         }
     }
 
-    fun getTaskById(taskStr: String): Task? {
+    fun getTaskById(taskStr: String): Task {
         val id = taskStr.toInt()
-        return list.find { id == it.id }
+        return list.find { id == it.id } ?: throw NoSuchElementException("$taskStr not found")
     }
 
     fun percentDone(): String {

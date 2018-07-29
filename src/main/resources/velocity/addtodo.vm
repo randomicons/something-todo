@@ -1,9 +1,3 @@
-<form id="add-todo" ic-post-to="/todos">
-    <input
-        id="new-todo"
-        placeholder="hey. do something."
-        name="todo-name"
-        ic-target="#add-todo"
-        ic-replace-target="true"
-        autofocus="autofocus">
+<form id="add-todo" ic-post-to="/todos" ic-replace-target="true">
+    <input id="new-todo" placeholder="hey. do something." name="todo-name" autofocus="autofocus">
 </form>
