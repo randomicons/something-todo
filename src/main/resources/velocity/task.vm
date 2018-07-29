@@ -1,1 +1,10 @@
-<li> $name </li>
+<li class="#if($todo.completed)completed#end">
+    <div class="view">
+        <label
+            ic-get-from="/todos/$todo.id/edit"
+            ic-target="closest li"
+            ic-trigger-on="click"
+            ic-replace-target="true">$todo.name</label>
+        <button class="destroy" ic-delete-from="/todos/$todo.id">x</button>
+    </div>
+</li>

@@ -8,7 +8,14 @@
         <link rel="stylesheet" href="/css/styles.css">
     </head>
     <body>
-        #parse("/velocity/todoList.vm")
+        <main class="container">
+            <ol id="todo-list">
+                #foreach($todo in $todos)
+                    #parse("velocity/task.vm") 
+                #end
+                #parse("velocity/addtodo.vm") 
+            </ol>
+        </main>
         ## <div id="info">
         ##     <p>Double-click to edit a todo</p>
         ## </div>

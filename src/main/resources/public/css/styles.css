@@ -2,32 +2,32 @@ body {
   font-family: 'Fira Mono', monospace;
   background: #ffffff;
   color: #222222;
-  font-size: 1.6em;
+  font-size: 1em;
   line-height: 1.5;
 }
 
 @media (min-width: 64em) {
   body {
-    font-size: 1.92em;
+    font-size: 1.2em;
     line-height: 1.8;
   }
 }
 
 @media (min-width: 85.375em) {
   body {
-    font-size: 2.08em;
+    font-size: 1.3em;
   }
 }
 
 @media (min-width: 120em) {
   body {
-    font-size: 2.24em;
+    font-size: 1.4em;
   }
 }
 
 @media (min-width: 160em) {
   body {
-    font-size: 2.56em;
+    font-size: 1.6em;
   }
 }
 
@@ -67,12 +67,4 @@ h1 {
 
 #todo-list li {
   padding: 1.5em;
-}
-
-#todo-list li .view button {
-  visibility: hidden;
-}
-
-main #add-todo {
-  margin: 0 auto;
 }

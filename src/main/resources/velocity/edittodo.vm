@@ -1,0 +1,14 @@
+<li id="editing">
+    <form id="edit-form" ic-put-to="/todos/$todo.id">
+        <input
+            id="todo-edit"
+            ic-get-from="/todos/$todo.id"
+            ic-trigger-on="blur"
+            ic-target="closest li"
+            ic-replace-target="true"
+            name="todo-name"
+            class="edit"
+            value="$todo.name"
+            autofocus="autofocus"/>
+    </form>
+</li>

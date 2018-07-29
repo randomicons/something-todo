@@ -1,4 +1,3 @@
-import spark.Request
 import java.time.Duration
 import java.util.*
 import kotlin.concurrent.timer
@@ -24,6 +23,11 @@ object Todo {
         } else {
             list.first { it.name == taskStr }
         }
+    }
+
+    fun getTaskById(taskStr: String): Task? {
+        val id = taskStr.toInt()
+        return list.find { id == it.id }
     }
 
     fun percentDone(): String {
@@ -60,16 +64,10 @@ object Todo {
         }
     }
 
-    fun addTask(req: Request): String {
-        //    list += Task(cm[0], cm.getOrNull(1))
-        val name = req.queryParams("todo-name")
-        list.plusAssign(Task(name))
-        print(Task)
-        return Render.template("velocity/task.vm", object : HashMap<String, Any>() {
-            init {
-                this["name"] = name
-            }
-        })
+    fun addTask(name: String): Task {
+        val task = Task(name)
+        list.plusAssign(task)
+        return task
     }
 
 }
