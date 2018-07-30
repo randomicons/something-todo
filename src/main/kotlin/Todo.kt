@@ -11,6 +11,11 @@ object Todo {
     var curTask: Task? = null
     var timer: Timer? = null
 
+    fun updateById(newName: String, id: String): Task {
+        val task = getTaskById(id)
+        task.name = newName
+        return task
+    }
 
     fun finTask(cm: String) {
         val task = getTask(cm)

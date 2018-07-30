@@ -1,5 +1,11 @@
-$primary-color: #ffffff;
+@import 'reset';
+$primary-font: "Fira Mono",
+monospace;
+$title-font: "PT Mono",
+monospace;
+$primary-color: #222222;
 $secondary-color: #000000;
+$bg-color: #ffffff;
 $module-breakpoint: 20em;
 // Breakpoints
 $bp-small: 48em; // 768px
@@ -17,10 +23,9 @@ $mq-retina: "(-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi)";
 $base-line-height: 1.5;
 $header-line-height: 1.25;
 $base-font-size: 1em;
-body {
-    font-family: 'Fira Mono', monospace;
-    background: #ffffff;
-    color: #222222;
+%font {
+    font-family: $primary-font;
+    color: $primary-color;
     font-size: $base-font-size;
     line-height: $base-line-height;
     @media #{$mq-medium} {
@@ -34,11 +39,17 @@ body {
         font-size: $base-font-size*1.4;
     }
     @media #{$mq-xxlarge} {
-        font-size: $base-font-size*1.6;
+        font-size: $base-font-size*1.5;
     }
 }
 
-.container {
+body {
+    @extend %font;
+    background: $bg-color;
+}
+
+header {
+    padding: .5em;
     margin: 0 4%;
     @media #{$mq-medium} {
         margin: 0 8%;
@@ -51,23 +62,86 @@ body {
     }
 }
 
-header {
-    margin: 0 auto;
+.container {
+    margin: 0 8%;
+    border: 5px #7bcad4;
+    @media #{$mq-medium} {
+        margin: 0 8%;
+    }
+    @media #{$mq-large} {
+        margin: 0 12%;
+    }
+    @media #{$mq-xlarge} {
+        margin: 0 18%;
+    }
 }
 
 h1 {
-    font-family: 'PT Mono', monospace;
-    font-size: 4em;
-    margin-left: 1%;
-    padding: .5em 1em;
+    font-family: $title-font;
+    font-size: 2em;
     text-decoration: underline;
 }
 
-#todo-list li {
-    padding: 1.5em;
+%todo-form {
+    @extend %font;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    outline: none;
+    border: none;
+    font-size: inherit;
+    font-family: inherit;
 }
 
+%todo-form-focus {
+    @extend %font;
+    -webkit-box-shadow: none;
+    border-color: inherit;
+    box-shadow: none;
+    font-size: inherit;
+    font-family: inherit; //     border-bottom: 2px solid #253638;
+}
+
+#edit-todo input {
+    @extend %todo-form;
+}
+
+#add-todo input {
+    @extend %todo-form;
+}
+
+#edit-todo input:focus {
+    @extend %todo-form-focus;
+}
+
+#add-todo input:focus {
+    @extend %todo-form-focus;
+}
+
+#todo-list li .view button {
+    visibility: hidden;
+}
+
+#todo-list {
+    list-style: decimal;
+}
+
+#todo-list li {
+    padding: .5rem;
+    border-bottom: 2px solid #dadada
+}
+
+#todo-list li:hover {
+    border-color: #9b9b9b;
+}
+
+.focused {
+    border-color: #7bcad4 !important;
+}
+
+// #editing, #new-task {
+//     border-color: #7bcad4 !important;
+// }
 .ic-removing {
     opacity: 0;
-    transition: all 1s ease;
+    transition: all .3s ease;
 }

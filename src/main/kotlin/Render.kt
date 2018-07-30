@@ -6,6 +6,11 @@ import java.util.*
 
 object Render {
 
+    fun update(req: Request): String {
+        Todo.updateById(req.queryParams("todo-name"), req.params("id"))
+        return task(req)
+    }
+
     fun delete(req: Request): String {
         Todo.deleteById(req.params("id"))
         return ""

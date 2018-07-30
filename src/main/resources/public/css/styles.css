@@ -1,38 +1,119 @@
+/* http://meyerweb.com/eric/tools/css/reset/ 
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
+}
+
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section {
+  display: block;
+}
+
 body {
-  font-family: 'Fira Mono', monospace;
-  background: #ffffff;
+  line-height: 1;
+}
+
+ol, ul {
+  list-style: none;
+}
+
+blockquote, q {
+  quotes: none;
+}
+
+blockquote:before, blockquote:after,
+q:before, q:after {
+  content: '';
+  content: none;
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+body, #edit-todo input, #add-todo input, #edit-todo input:focus, #add-todo input:focus {
+  font-family: "Fira Mono", monospace;
   color: #222222;
   font-size: 1em;
   line-height: 1.5;
 }
 
 @media (min-width: 64em) {
-  body {
+  body, #edit-todo input, #add-todo input, #edit-todo input:focus, #add-todo input:focus {
     font-size: 1.2em;
     line-height: 1.8;
   }
 }
 
 @media (min-width: 85.375em) {
-  body {
+  body, #edit-todo input, #add-todo input, #edit-todo input:focus, #add-todo input:focus {
     font-size: 1.3em;
   }
 }
 
 @media (min-width: 120em) {
-  body {
+  body, #edit-todo input, #add-todo input, #edit-todo input:focus, #add-todo input:focus {
     font-size: 1.4em;
   }
 }
 
 @media (min-width: 160em) {
-  body {
-    font-size: 1.6em;
+  body, #edit-todo input, #add-todo input, #edit-todo input:focus, #add-todo input:focus {
+    font-size: 1.5em;
+  }
+}
+
+body {
+  background: #ffffff;
+}
+
+header {
+  padding: .5em;
+  margin: 0 4%;
+}
+
+@media (min-width: 64em) {
+  header {
+    margin: 0 8%;
+  }
+}
+
+@media (min-width: 85.375em) {
+  header {
+    margin: 0 12%;
+  }
+}
+
+@media (min-width: 120em) {
+  header {
+    margin: 0 18%;
   }
 }
 
 .container {
-  margin: 0 4%;
+  margin: 0 8%;
+  border: 5px #7bcad4;
 }
 
 @media (min-width: 64em) {
@@ -53,23 +134,51 @@ body {
   }
 }
 
-header {
-  margin: 0 auto;
-}
-
 h1 {
-  font-family: 'PT Mono', monospace;
-  font-size: 4em;
-  margin-left: 1%;
-  padding: .5em 1em;
+  font-family: "PT Mono", monospace;
+  font-size: 2em;
   text-decoration: underline;
 }
 
+#edit-todo input, #add-todo input {
+  -webkit-box-shadow: none;
+  box-shadow: none;
+  outline: none;
+  border: none;
+  font-size: inherit;
+  font-family: inherit;
+}
+
+#edit-todo input:focus, #add-todo input:focus {
+  -webkit-box-shadow: none;
+  border-color: inherit;
+  box-shadow: none;
+  font-size: inherit;
+  font-family: inherit;
+}
+
+#todo-list li .view button {
+  visibility: hidden;
+}
+
+#todo-list {
+  list-style: decimal;
+}
+
 #todo-list li {
-  padding: 1.5em;
+  padding: .5rem;
+  border-bottom: 2px solid #dadada;
+}
+
+#todo-list li:hover {
+  border-color: #9b9b9b;
+}
+
+.focused {
+  border-color: #7bcad4 !important;
 }
 
 .ic-removing {
   opacity: 0;
-  transition: all 1s ease;
+  transition: all .3s ease;
 }

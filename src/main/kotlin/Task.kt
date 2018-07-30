@@ -2,7 +2,7 @@ import java.io.Serializable
 import java.time.Duration
 import java.util.*
 
-open class Task(val name: String, val dueDate: Date? = null) : Serializable {
+open class Task(var name: String, val dueDate: Date? = null) : Serializable {
     var timeSpent: Duration = Duration.ZERO
     var completed = false
     var pomoCount = 0

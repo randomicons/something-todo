@@ -1,4 +1,4 @@
-<li class="#if($todo.completed)completed#end">
+<li>
     <div class="view">
         <span
             ic-get-from="/todos/$todo.id/edit"

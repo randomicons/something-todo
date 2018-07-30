@@ -52,15 +52,14 @@ object Main {
 
         // Remove by id
         delete("/todos/:id") { req, res ->
-            res.header("X-IC-Remove", "1s")
+            res.header("X-IC-Remove", ".3s")
             Render.delete(req)
         }
 
-//         // Update by id
-//         put("/todos/:id") { req, res ->
-// //            TodoDao.update(req.params("id"), req.queryParams("todo-title"))
-//             Render.todos(req)
-//         }
+        // Update by id
+        put("/todos/:id") { req, res ->
+            Render.update(req)
+        }
 
 //         // Toggle status by id
 //         put("/todos/:id/toggle_status") { req, res ->
