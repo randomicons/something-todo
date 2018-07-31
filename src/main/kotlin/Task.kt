@@ -34,6 +34,9 @@ open class Task(var name: String, val dueDate: Date? = null) : Serializable {
         return result
     }
 
+    fun date(): String {
+        return dueDate.toString()
+    }
     companion object {
         var nextId = 0
     }

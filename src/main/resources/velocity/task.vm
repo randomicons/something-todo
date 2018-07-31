@@ -1,14 +1,11 @@
-<li>
-    <div class="view">
-        <span
-            ic-get-from="/todos/$todo.id/edit"
-            ic-target="closest li"
-            ic-trigger-on="click"
-            ic-replace-target="true">$todo.name</span>
-        <button
-            class="destroy"
-            ic-delete-from="/todos/$todo.id"
-            ic-target="closest li"
-            ic-replace-target="true">x</button>
-    </div>
+<li class="view" ic-get-from="/todos/$todo.id/edit" ic-trigger-on="click" ic-replace-target="true">
+    <span >$todo.name</span>
+    <span>
+        Due Date: $todo.date()
+    </span>
+    <button
+        class="destroy"
+        ic-delete-from="/todos/$todo.id"
+        ic-target="closest li"
+        ic-replace-target="true">x</button>
 </li>

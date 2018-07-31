@@ -6,11 +6,12 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link href="https://fonts.googleapis.com/css?family=Fira+Mono:400,700|PT+Mono" rel="stylesheet">
         <link rel="stylesheet" href="/css/styles.css">
+        <link rel="stylesheet" href="/css/datepicker.min.css">
     </head>
     <body>
-    <header class=".container">
-        <h1>something todo</h1>
-    </header>
+        <header class=".container">
+            <h1>something todo</h1>
+        </header>
         <main class="container">
             <ol id="todo-list">
                 #foreach($todo in $todos)
@@ -21,6 +22,7 @@
         </main>
         <script src="/js/jquery-3.3.1.min.js"></script>
         <script src="/js/intercooler-1.2.1.min.js"></script>
+        <script src="/js/datepicker.js"></script>
         <script src="/js/todo.js"></script>
     </body>
 </html>

@@ -167,13 +167,30 @@ h1 {
 
 #todo-list li {
   padding: .5rem;
+}
+
+#todo-list li > * {
+  float: left;
+  margin-right: 1em;
+}
+
+#todo-list input {
   border-bottom: 2px solid #dadada;
 }
 
-#todo-list li:hover {
-  border-color: #9b9b9b;
+#line {
+  position: absolute;
+  left: 20%;
+  top: 10%;
+  height: 500px;
+  border-left: 2px solid #c27070;
 }
 
+.edit-date {
+  border-left: 1px solid #9b9b9b;
+}
+
+#todo-list li > *:hover,
 .focused {
   border-color: #7bcad4 !important;
 }
