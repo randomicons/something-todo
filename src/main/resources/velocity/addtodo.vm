@@ -1,7 +1,0 @@
-<li>
-    <div class="view">
-        <form id="add-todo" ic-post-to="/todos" ic-target="closest li" ic-replace-target="true">
-            <input id="new-todo" placeholder="hey. do something." name="todo-name" autofocus="autofocus">
-        </form>
-    </div>
-</li>

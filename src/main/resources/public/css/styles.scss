@@ -43,43 +43,40 @@ $base-font-size: 1em;
     }
 }
 
+%mq-margin {
+    @media #{$mq-medium} {
+        margin: 0 8%;
+    }
+    @media #{$mq-large} {
+        margin: 0 12%;
+    }
+    @media #{$mq-xlarge} {
+        margin: 0 18%;
+    }
+}
+
 body {
     @extend %font;
     background: $bg-color;
 }
 
 header {
+    @extend %mq-margin;
     padding: .5em;
     margin: 0 4%;
-    @media #{$mq-medium} {
-        margin: 0 8%;
-    }
-    @media #{$mq-large} {
-        margin: 0 12%;
-    }
-    @media #{$mq-xlarge} {
-        margin: 0 18%;
-    }
 }
 
 .container {
     margin: 0 8%;
     border: 5px #7bcad4;
-    @media #{$mq-medium} {
-        margin: 0 8%;
-    }
-    @media #{$mq-large} {
-        margin: 0 12%;
-    }
-    @media #{$mq-xlarge} {
-        margin: 0 18%;
-    }
+    @extend %mq-margin;
 }
 
 h1 {
     font-family: $title-font;
     font-size: 2em;
-    text-decoration: underline;
+    // text-decoration: underline;
+    text-transform: capitalize;
 }
 
 %todo-form {
@@ -101,19 +98,13 @@ h1 {
     font-family: inherit; //     border-bottom: 2px solid #253638;
 }
 
-#edit-todo input {
+#add-task input,
+.edit-task input {
     @extend %todo-form;
 }
 
-#add-todo input {
-    @extend %todo-form;
-}
-
-#edit-todo input:focus {
-    @extend %todo-form-focus;
-}
-
-#add-todo input:focus {
+.edit-task input:focus,
+#add-task input:focus {
     @extend %todo-form-focus;
 }
 

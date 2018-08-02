@@ -1,16 +1,16 @@
 <li>
-    <form id="edit-todo" ic-replace-target="true" ic-target="closest li" ic-put-to="/todos/$todo.id">
-        ##
-        ## <input
-        ##     ic-replace-target="true"
-        ##     ic-target="closest li"
-        ##     ic-trigger-on="blur"
-        ##     ic-put-to="/todos/$todo.id"
-        ##     name="todo-name"
-        ##     class="edit-name"
-        ##     value="$todo.name"
-        ##     autofocus="autofocus"
-        ##     pattern=".+"/>
+    ## <form id="edit-todo" ic-replace-target="true" ic-target="closest li" ic-put-to="/todos/$todo.id">
+    <form id="edit-todo">
+
+        <input
+            ic-target="this"
+            ic-trigger-on="changed"
+            ic-append-from="/todos/$todo.id"
+            name="todo-name"
+            class="edit-name"
+            value="$todo.name"
+            autofocus="autofocus"
+            pattern=".+"/>
         ## <input
         ##     class="edit-date"
         ##     type="date"
@@ -21,12 +21,16 @@
         ##     name="todo-name"
         ##     placeholder="date"
         ##     value="$todo.name"/>
-        <input class="edit-name" name="todo-name" value="$todo.name" pattern=".+"/>
+        ## <input class="edit-name" name="todo-name" value="$todo.name" pattern=".+"/>
         <input
             class="edit-date"
             data-toggle="datepicker"
             name="todo-date"
-            value= #if($todo.date() == null) "" #else $todo.date() #end
+            value="#if($todo.date() == null)"
+            ""
+            #else="#else"
+            $todo.date()="$todo.date()"
+            #end="#end"
             placeholder="date">
     </form>
 </li>

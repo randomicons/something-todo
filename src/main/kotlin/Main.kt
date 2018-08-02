@@ -68,7 +68,7 @@ object Main {
 //         }
         get("/todos/:id") { req, _ -> Render.task(req) }
         // Edit by id
-        get("/todos/:id/edit") { req, res -> Render.edit(req) }
+//        get("/todos/:id/edit") { req, res -> Render.edit(req) }
 
 
     }

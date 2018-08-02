@@ -1,5 +1,5 @@
-#parse("velocity/task.vm")
-#parse("velocity/addtodo.vm")
+#parse("velocity/edittask.vm")
+#parse("velocity/addtask.vm")
 
 ## <main class="container" ic-include='{"status":"$status"}'>
 ##     ## <input type="checkbox" name="toggle-all" ic-put-to="/todos/toggle_status" id="toggle-all" #if($allComplete) checked #end>

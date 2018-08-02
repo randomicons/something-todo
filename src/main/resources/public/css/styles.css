@@ -52,7 +52,9 @@ table {
   border-spacing: 0;
 }
 
-body, #edit-todo input, #add-todo input, #edit-todo input:focus, #add-todo input:focus {
+body, #add-task input,
+.edit-task input, .edit-task input:focus,
+#add-task input:focus {
   font-family: "Fira Mono", monospace;
   color: #222222;
   font-size: 1em;
@@ -60,27 +62,53 @@ body, #edit-todo input, #add-todo input, #edit-todo input:focus, #add-todo input
 }
 
 @media (min-width: 64em) {
-  body, #edit-todo input, #add-todo input, #edit-todo input:focus, #add-todo input:focus {
+  body, #add-task input,
+  .edit-task input, .edit-task input:focus,
+  #add-task input:focus {
     font-size: 1.2em;
     line-height: 1.8;
   }
 }
 
 @media (min-width: 85.375em) {
-  body, #edit-todo input, #add-todo input, #edit-todo input:focus, #add-todo input:focus {
+  body, #add-task input,
+  .edit-task input, .edit-task input:focus,
+  #add-task input:focus {
     font-size: 1.3em;
   }
 }
 
 @media (min-width: 120em) {
-  body, #edit-todo input, #add-todo input, #edit-todo input:focus, #add-todo input:focus {
+  body, #add-task input,
+  .edit-task input, .edit-task input:focus,
+  #add-task input:focus {
     font-size: 1.4em;
   }
 }
 
 @media (min-width: 160em) {
-  body, #edit-todo input, #add-todo input, #edit-todo input:focus, #add-todo input:focus {
+  body, #add-task input,
+  .edit-task input, .edit-task input:focus,
+  #add-task input:focus {
     font-size: 1.5em;
+  }
+}
+
+@media (min-width: 64em) {
+  header, .container {
+    margin: 0 8%;
+  }
+}
+
+@media (min-width: 85.375em) {
+  header, .container {
+    margin: 0 12%;
+  }
+}
+
+@media (min-width: 120em) {
+  header, .container {
+    margin: 0 18%;
   }
 }
 
@@ -93,54 +121,19 @@ header {
   margin: 0 4%;
 }
 
-@media (min-width: 64em) {
-  header {
-    margin: 0 8%;
-  }
-}
-
-@media (min-width: 85.375em) {
-  header {
-    margin: 0 12%;
-  }
-}
-
-@media (min-width: 120em) {
-  header {
-    margin: 0 18%;
-  }
-}
-
 .container {
   margin: 0 8%;
   border: 5px #7bcad4;
 }
 
-@media (min-width: 64em) {
-  .container {
-    margin: 0 8%;
-  }
-}
-
-@media (min-width: 85.375em) {
-  .container {
-    margin: 0 12%;
-  }
-}
-
-@media (min-width: 120em) {
-  .container {
-    margin: 0 18%;
-  }
-}
-
 h1 {
   font-family: "PT Mono", monospace;
   font-size: 2em;
-  text-decoration: underline;
+  text-transform: capitalize;
 }
 
-#edit-todo input, #add-todo input {
+#add-task input,
+.edit-task input {
   -webkit-box-shadow: none;
   box-shadow: none;
   outline: none;
@@ -149,7 +142,8 @@ h1 {
   font-family: inherit;
 }
 
-#edit-todo input:focus, #add-todo input:focus {
+.edit-task input:focus,
+#add-task input:focus {
   -webkit-box-shadow: none;
   border-color: inherit;
   box-shadow: none;

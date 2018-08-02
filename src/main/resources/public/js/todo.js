@@ -23,7 +23,7 @@ $(document).ready(function () {
         $(this).removeClass("focused");
     });
 
-
+    $("[data-toggle='datepicker']").datepicker();
     $("#todo-list").on("elementAdded.ic", function () {
         $("[data-toggle='datepicker']").datepicker();
     });

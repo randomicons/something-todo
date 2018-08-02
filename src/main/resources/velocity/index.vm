@@ -14,10 +14,10 @@
         </header>
         <main class="container">
             <ol id="todo-list">
-                #foreach($todo in $todos)
-                    #parse("velocity/task.vm") 
+                #foreach($task in $todos)
+                    #parse("velocity/edittask.vm") 
                 #end
-                #parse("velocity/addtodo.vm") 
+                #parse("velocity/addtask.vm") 
             </ol>
         </main>
         <script src="/js/jquery-3.3.1.min.js"></script>

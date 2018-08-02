@@ -7,7 +7,7 @@ import java.util.*
 object Render {
 
     fun update(req: Request): String {
-        Todo.updateById(req.queryParams("todo-name"), req.params("id"))
+        Todo.updateById(req.queryParams("task-name"), req.params("id"))
         return task(req)
     }
 
@@ -16,21 +16,21 @@ object Render {
         return ""
     }
 
-    fun edit(req: Request): String {
-        return template("velocity/edittodo.vm", object : HashMap<String, Task>() {
+    fun task(req: Request): String {
+        return template("velocity/edittask.vm", object : HashMap<String, Task>() {
             init {
-                this["todo"] = Todo.getTaskById(req.params("id"))
+                this["task"] = Todo.getTaskById(req.params("id"))
             }
         })
     }
 
-    fun task(req: Request): String {
-        return template("velocity/task.vm", object : HashMap<String, Task>() {
-            init {
-                this["todo"] = Todo.getTaskById(req.params("id"))
-            }
-        })
-    }
+//    fun task(req: Request): String {
+//        return template("velocity/asldkfj.vm", object : HashMap<String, Task>() {
+//            init {
+//                this["task"] = Todo.getTaskById(req.params("id"))
+//            }
+//        })
+//    }
 
     fun main(req: Request): String {
         return template("velocity/index.vm", object : HashMap<String, Any>() {
@@ -41,10 +41,10 @@ object Render {
     }
 
     fun add(req: Request): String {
-        val task = Todo.addTask(req.queryParams("todo-name"))
+        val task = Todo.addTask(req.queryParams("task-name"))
         return Render.template("velocity/newtask.vm", object : HashMap<String, Any>() {
             init {
-                this["todo"] = task
+                this["task"] = task
             }
         })
     }
