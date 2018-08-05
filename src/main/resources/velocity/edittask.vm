@@ -9,10 +9,10 @@
             ic-target="closest li"
             ic-trigger-on="blur"
             ic-put-to="/todos/$task.id"
-            ic-replace-target= "true"
             name="task-name"
-            class="input-name"
+            class="input-name width-dynamic"
             value="$task.name"
+            ic-swap-style="append"
             pattern=".+"/>
         ## <input
         ##     class="edit-date"
@@ -25,25 +25,24 @@
         ##     placeholder="date"
         ##     value="$todo.name"/>
         ## <input class="edit-name" name="todo-name" value="$todo.name" pattern=".+"/>
-        <label>
-            due:
+        <label class="input-date">
+            due by
             <input
-                class="input-date"
                 ic-target="closest li"
                 ic-trigger-on="blur"
                 ic-put-to="/todos/$task.id"
-                ic-replace-target= "true"
                 data-toggle="datepicker"
-
+                placeholder="m-d-yyyy"
                 name="task-date"
                 #if($task.dueDate)
                     value="$task.date()"
                 #end>
         </label>
-        <span
-        class="destroy"
-        ic-delete-from="/todos/$task.id"
-        ic-target="closest li"
-        ic-replace-target="true">x</span>
+        <div class="actions">
+            <span
+                ic-delete-from="/todos/$task.id"
+                ic-target="closest li"
+                ic-replace-target="true">x</span>
+        </div>
     </form>
 </li>

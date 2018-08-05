@@ -2,10 +2,11 @@
     <div class="view">
         <form id="add-task" ic-post-to="/todos" ic-target="closest li" ic-replace-target="true">
 
-            <input class="input-name" placeholder="hey. do something." name="task-name" autofocus="autofocus">
-            <label>
-                due:
-                <input class="input-date" data-toggle="datepicker" name="date">
+            <input class="input-name width-dynamic" placeholder="something?" name="task-name" autofocus="autofocus" filter=".+" >
+            <label class="input-date">
+                due by
+                <input  placeholder="m-d-yy"
+                data-toggle="datepicker" name="date">
             </label>
             <button type="submit">add</button>
         </form>

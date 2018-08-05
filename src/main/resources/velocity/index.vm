@@ -9,7 +9,7 @@
         <link rel="stylesheet" href="/css/datepicker.min.css">
     </head>
     <body>
-        <header class=".container">
+        <header>
             <h1>something todo</h1>
         </header>
         <main class="container">
@@ -23,6 +23,8 @@
         <script src="/js/jquery-3.3.1.min.js"></script>
         <script src="/js/intercooler-1.2.1.min.js"></script>
         <script src="/js/datepicker.js"></script>
+        <script src="/js/pxem.jQuery.js"></script>
+        <script src="/js/width-dynamic.js"></script>
         <script src="/js/todo.js"></script>
     </body>
 </html>

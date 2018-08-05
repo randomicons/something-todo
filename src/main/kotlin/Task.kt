@@ -2,7 +2,7 @@ import java.io.Serializable
 import java.time.Duration
 import java.util.*
 
-open class Task(var name: String, val dueDate: Date? = null) : Serializable {
+open class Task(var name: String, var dueDate: Date? = null) : Serializable {
     var timeSpent: Duration = Duration.ZERO
     var completed = false
     var pomoCount = 0
@@ -35,7 +35,7 @@ open class Task(var name: String, val dueDate: Date? = null) : Serializable {
     }
 
     fun date(): String {
-        return dueDate.toString()
+        return Todo.dateFormat.format(dueDate)
     }
     companion object {
         var nextId = 0

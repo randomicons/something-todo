@@ -4,7 +4,7 @@ monospace;
 $title-font: "PT Mono",
 monospace;
 $primary-color: #222222;
-$secondary-color: #000000;
+$secondary-color: #07bcad;
 $bg-color: #ffffff;
 $module-breakpoint: 20em;
 // Breakpoints
@@ -33,25 +33,28 @@ $base-font-size: 1em;
         line-height: $base-line-height*1.2;
     }
     @media #{$mq-large} {
-        font-size: $base-font-size*1.3;
+        font-size: $base-font-size*1.2;
     }
     @media #{$mq-xlarge} {
-        font-size: $base-font-size*1.4;
+        font-size: $base-font-size*1.3;
     }
     @media #{$mq-xxlarge} {
-        font-size: $base-font-size*1.5;
+        font-size: $base-font-size*1.4;
     }
 }
 
 %mq-margin {
-    @media #{$mq-medium} {
+    @media #{$mq-small} {
         margin: 0 8%;
     }
-    @media #{$mq-large} {
+    @media #{$mq-medium} {
         margin: 0 12%;
     }
-    @media #{$mq-xlarge} {
+    @media #{$mq-large} {
         margin: 0 18%;
+    }
+    @media #{$mq-xlarge} {
+        margin: 0 30%;
     }
 }
 
@@ -62,21 +65,31 @@ body {
 
 header {
     @extend %mq-margin;
+    width: 20em;
     padding: .5em;
-    margin: 0 4%;
+    padding-bottom: 0; // margin: 0 auto;
+    //     border-bottom: 2px solid #a55252;
 }
 
 .container {
-    margin: 0 8%;
-    border: 5px #7bcad4;
+    // border: 5px #7bcad4;
     @extend %mq-margin;
 }
 
 h1 {
     font-family: $title-font;
-    font-size: 2em;
-    // text-decoration: underline;
+    font-size: 2em; // text-decoration: underline;
     text-transform: capitalize;
+}
+
+#todo-list {
+    width: 100%;
+}
+
+#todo-list form {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
 }
 
 %todo-form {
@@ -92,7 +105,6 @@ h1 {
 %todo-form-focus {
     @extend %font;
     -webkit-box-shadow: none;
-    border-color: inherit;
     box-shadow: none;
     font-size: inherit;
     font-family: inherit; //     border-bottom: 2px solid #253638;
@@ -120,13 +132,34 @@ h1 {
     padding: .5rem;
 }
 
-#todo-list li>* {
-    float: left;
-    margin-right: 1em;
+#todo-list input {
+    border-bottom: 2px solid $bg-color;
+}
+.edit-task input:hover {
+    border-color: $secondary-color !important; 
 }
 
-#todo-list input {
-    border-bottom: 2px solid #dadada;
+#todo-list form>* {
+    padding: 0 .5em 0 0;
+}
+
+.input-name {
+    max-width: 70%;
+    padding: .5em;
+}
+
+.input-date {
+    text-align: center;
+    padding-top: .5em;
+    color: #8d8d8d;
+}
+
+.input-date input {
+    width: 5em;
+}
+
+#add-task input {
+    border-bottom: 2px solid $secondary-color !important;
 }
 
 #line {
@@ -137,13 +170,8 @@ h1 {
     border-left: 2px solid #c27070;
 }
 
-.edit-date {
-    border-left: 1px solid #9b9b9b
-}
-
-#todo-list li>*:hover,
 .focused {
-    border-color: #7bcad4 !important;
+    border-color: $secondary-color !important;
 }
 
 // .focused {

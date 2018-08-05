@@ -44,12 +44,6 @@ object Main {
 //             Render.todos(req)
 //         }
 
-//         // Toggle all status
-//         put("/todos/toggle_status") { req, res ->
-// //            TodoDao.toggleAll(req.queryParams("toggle-all") != null)
-//             Render.todos(req)
-//         }
-
         // Remove by id
         delete("/todos/:id") { req, res ->
             res.header("X-IC-Remove", ".3s")
@@ -67,8 +61,6 @@ object Main {
 //             Render.todos(req)
 //         }
         get("/todos/:id") { req, _ -> Render.task(req) }
-        // Edit by id
-//        get("/todos/:id/edit") { req, res -> Render.edit(req) }
 
 
     }

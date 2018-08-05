@@ -1,25 +1,27 @@
 $.fn.datepicker.setDefaults({
-    autoPick: true,
-    format: 'm-d-yyyy',
+    format: 'm-d-yy',
+    date: null,
     startDate: new Date()
-})
+});
+
+
 $(document).ready(function () {
 
     $("#todo-list").on("mouseover", "li", function () {
 
-        $(this).find("button").css("visibility", "visible");
+        $(this).find(".actions").css("visibility", "visible");
     });
 
     $("#todo-list").on("mouseleave", "li", function () {
 
-        $(this).find("button").css("visibility", "hidden");
+        $(this).find(".actions").css("visibility", "hidden");
     });
 
-    $("#todo-list").on("focus", "input", function () {
+    $("#todo-list").on("focus", ".edit-task input", function () {
         $(this).addClass("focused");
     });
 
-    $("#todo-list").on("blur", "input", function () {
+    $("#todo-list").on("blur", ".edit-task input", function () {
         $(this).removeClass("focused");
     });
 
@@ -28,5 +30,4 @@ $(document).ready(function () {
         $("[data-toggle='datepicker']").datepicker();
     });
 });
-
 

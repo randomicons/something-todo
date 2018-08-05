@@ -74,7 +74,7 @@ body, #add-task input,
   body, #add-task input,
   .edit-task input, .edit-task input:focus,
   #add-task input:focus {
-    font-size: 1.3em;
+    font-size: 1.2em;
   }
 }
 
@@ -82,7 +82,7 @@ body, #add-task input,
   body, #add-task input,
   .edit-task input, .edit-task input:focus,
   #add-task input:focus {
-    font-size: 1.4em;
+    font-size: 1.3em;
   }
 }
 
@@ -90,25 +90,31 @@ body, #add-task input,
   body, #add-task input,
   .edit-task input, .edit-task input:focus,
   #add-task input:focus {
-    font-size: 1.5em;
+    font-size: 1.4em;
   }
 }
 
-@media (min-width: 64em) {
+@media (min-width: 48em) {
   header, .container {
     margin: 0 8%;
   }
 }
 
-@media (min-width: 85.375em) {
+@media (min-width: 64em) {
   header, .container {
     margin: 0 12%;
   }
 }
 
-@media (min-width: 120em) {
+@media (min-width: 85.375em) {
   header, .container {
     margin: 0 18%;
+  }
+}
+
+@media (min-width: 120em) {
+  header, .container {
+    margin: 0 30%;
   }
 }
 
@@ -117,19 +123,25 @@ body {
 }
 
 header {
+  width: 20em;
   padding: .5em;
-  margin: 0 4%;
-}
-
-.container {
-  margin: 0 8%;
-  border: 5px #7bcad4;
+  padding-bottom: 0;
 }
 
 h1 {
   font-family: "PT Mono", monospace;
   font-size: 2em;
   text-transform: capitalize;
+}
+
+#todo-list {
+  width: 100%;
+}
+
+#todo-list form {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
 }
 
 #add-task input,
@@ -145,7 +157,6 @@ h1 {
 .edit-task input:focus,
 #add-task input:focus {
   -webkit-box-shadow: none;
-  border-color: inherit;
   box-shadow: none;
   font-size: inherit;
   font-family: inherit;
@@ -163,13 +174,35 @@ h1 {
   padding: .5rem;
 }
 
-#todo-list li > * {
-  float: left;
-  margin-right: 1em;
+#todo-list input {
+  border-bottom: 2px solid #ffffff;
 }
 
-#todo-list input {
-  border-bottom: 2px solid #dadada;
+.edit-task input:hover {
+  border-color: #07bcad !important;
+}
+
+#todo-list form > * {
+  padding: 0 .5em 0 0;
+}
+
+.input-name {
+  max-width: 70%;
+  padding: .5em;
+}
+
+.input-date {
+  text-align: center;
+  padding-top: .5em;
+  color: #8d8d8d;
+}
+
+.input-date input {
+  width: 5em;
+}
+
+#add-task input {
+  border-bottom: 2px solid #07bcad !important;
 }
 
 #line {
@@ -180,13 +213,8 @@ h1 {
   border-left: 2px solid #c27070;
 }
 
-.edit-date {
-  border-left: 1px solid #9b9b9b;
-}
-
-#todo-list li > *:hover,
 .focused {
-  border-color: #7bcad4 !important;
+  border-color: #07bcad !important;
 }
 
 .ic-removing {

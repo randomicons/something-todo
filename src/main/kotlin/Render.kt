@@ -1,14 +1,28 @@
 import spark.ModelAndView
 import spark.Request
 import spark.template.velocity.VelocityTemplateEngine
+import java.text.ParseException
 import java.util.*
 
 
 object Render {
 
     fun update(req: Request): String {
-        Todo.updateById(req.queryParams("task-name"), req.params("id"))
-        return task(req)
+        val date: Date? = try {
+            Todo.dateFormat.parse(req.queryParams("date"))
+        } catch (ex: Exception) {
+            when (ex) {
+                is ParseException, is IllegalStateException, is NullPointerException -> null
+                else -> {
+                    ex.printStackTrace()
+                    null
+                }
+            }
+        }
+
+        Todo.updateById(req.queryParams("task-name"), date, req.params("id"))
+        //     return task(req)
+        return ""
     }
 
     fun delete(req: Request): String {
@@ -41,7 +55,19 @@ object Render {
     }
 
     fun add(req: Request): String {
-        val task = Todo.addTask(req.queryParams("task-name"))
+        val date: Date? = try {
+            Todo.dateFormat.parse(req.queryParams("date"))
+        } catch (ex: Exception) {
+            when (ex) {
+                is ParseException, is IllegalStateException, is NullPointerException -> null
+                else -> {
+                    ex.printStackTrace()
+                    null
+                }
+            }
+        }
+
+        val task = Todo.addTask(req.queryParams("task-name"), date)
         return Render.template("velocity/newtask.vm", object : HashMap<String, Any>() {
             init {
                 this["task"] = task

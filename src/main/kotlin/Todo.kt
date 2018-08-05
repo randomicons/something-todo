@@ -1,3 +1,4 @@
+import java.text.SimpleDateFormat
 import java.time.Duration
 import java.util.*
 import kotlin.concurrent.timer
@@ -10,9 +11,11 @@ object Todo {
     var timerRunning = false
     var curTask: Task? = null
     var timer: Timer? = null
+    val dateFormat = SimpleDateFormat("M-d-yy")
 
-    fun updateById(newName: String, id: String): Task {
+    fun updateById(newName: String, date: Date?, id: String): Task {
         val task = getTaskById(id)
+        task.dueDate = date
         task.name = newName
         return task
     }
@@ -79,8 +82,8 @@ object Todo {
         }
     }
 
-    fun addTask(name: String): Task {
-        val task = Task(name)
+    fun addTask(name: String, date: Date?): Task {
+        val task = Task(name, date)
         list.plusAssign(task)
         return task
     }
