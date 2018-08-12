@@ -17,11 +17,12 @@ object Main {
 
     @JvmStatic
     fun main(args: Array<String>) {
+        var localhost = false
         exception(Exception::class.java) { e, req, res -> e.printStackTrace() } // print all exceptions
         Velocity.setProperty(RuntimeConstants.RESOURCE_LOADER, "classpath")
         Velocity.setProperty("classpath.resource.loader.class", ClasspathResourceLoader::class.java.name)
         Velocity.init()
-        if (herokuAssignedPort == 4567) {
+        if (localhost) {
             val projectDir = System.getProperty("user.dir")
 
             val staticDir = "/src/main/resources/public"

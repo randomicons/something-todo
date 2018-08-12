@@ -21,6 +21,7 @@ function startPomo(task) {
         postPomo(curTask);
         curTaskTime = 0;
         curTask.css("background", "inherit");
+        curTask.find(".pomo-countdown").html("");
     }
     curTask = task;
     if (!timerRunning) {
