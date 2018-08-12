@@ -25,6 +25,7 @@
         <script src="/js/datepicker.js"></script>
         <script src="/js/pxem.jQuery.js"></script>
         <script src="/js/width-dynamic.js"></script>
+        <script src="/js/pomo.js"></script>
         <script src="/js/todo.js"></script>
     </body>
 </html>

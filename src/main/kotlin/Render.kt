@@ -30,12 +30,23 @@ object Render {
         return ""
     }
 
+    fun complete(req: Request): String {
+        Todo.getTaskById(req.params("id")).completed = true
+        return ""
+    }
+
     fun task(req: Request): String {
         return template("velocity/edittask.vm", object : HashMap<String, Task>() {
             init {
                 this["task"] = Todo.getTaskById(req.params("id"))
             }
         })
+    }
+    
+
+    fun addTime(req: Request): String {
+        Todo.addTimeById(req.params("id"), req.params("time").toLong())
+        return ""
     }
 
 //    fun task(req: Request): String {

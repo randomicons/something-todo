@@ -50,6 +50,10 @@ object Main {
             Render.delete(req)
         }
 
+        delete("/todos/complete/:id") { req, res ->
+            res.header("X-IC-Remove", ".3s")
+            Render.complete(req)
+        }
         // Update by id
         put("/todos/:id") { req, res ->
             Render.update(req)
@@ -62,6 +66,7 @@ object Main {
 //         }
         get("/todos/:id") { req, _ -> Render.task(req) }
 
+        post("/todos/:id/pomo/:time") { req, _ -> Render.addTime(req)}
 
     }
 

@@ -20,6 +20,11 @@ object Todo {
         return task
     }
 
+    fun addTimeById(id: String, time : Long) {
+        val task = getTaskById(id)
+        task.addTime(time)
+    }
+
     fun finTask(cm: String) {
         val task = getTask(cm)
         task.completed = true

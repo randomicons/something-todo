@@ -125,7 +125,7 @@ body {
 header {
   width: 20em;
   padding: .5em;
-  padding-bottom: 0;
+  padding-bottom: .3em;
 }
 
 h1 {
@@ -162,10 +162,6 @@ h1 {
   font-family: inherit;
 }
 
-#todo-list li .view button {
-  visibility: hidden;
-}
-
 #todo-list {
   list-style: decimal;
 }
@@ -183,22 +179,25 @@ h1 {
 }
 
 #todo-list form > * {
-  padding: 0 .5em 0 0;
+  padding: 0 .5em 0 .5em;
 }
 
 .input-name {
   max-width: 70%;
-  padding: .5em;
 }
 
 .input-date {
   text-align: center;
-  padding-top: .5em;
   color: #8d8d8d;
 }
 
 .input-date input {
   width: 5em;
+  padding: 0 .5em;
+}
+
+.pomo-countdown {
+  color: #8d8d8d;
 }
 
 #add-task input {
@@ -215,6 +214,22 @@ h1 {
 
 .focused {
   border-color: #07bcad !important;
+}
+
+.actions {
+  visibility: hidden;
+}
+
+.actions input:hover {
+  background: #e3f8f8;
+}
+
+.actions > * {
+  width: 1em;
+  margin-left: 1em;
+  margin-top: .1em;
+  float: left;
+  padding: .2em;
 }
 
 .ic-removing {

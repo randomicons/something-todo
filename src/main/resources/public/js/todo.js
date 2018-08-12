@@ -7,27 +7,29 @@ $.fn.datepicker.setDefaults({
 
 $(document).ready(function () {
 
-    $("#todo-list").on("mouseover", "li", function () {
+    var todolist = $("#todo-list");
+
+    todolist.on("mouseover", "li", function () {
 
         $(this).find(".actions").css("visibility", "visible");
     });
 
-    $("#todo-list").on("mouseleave", "li", function () {
+    todolist.on("mouseleave", "li", function () {
 
         $(this).find(".actions").css("visibility", "hidden");
     });
 
-    $("#todo-list").on("focus", ".edit-task input", function () {
+    todolist.on("focus", ".edit-task input", function () {
         $(this).addClass("focused");
     });
 
-    $("#todo-list").on("blur", ".edit-task input", function () {
+    todolist.on("blur", ".edit-task input", function () {
         $(this).removeClass("focused");
     });
 
-    $("[data-toggle='datepicker']").datepicker();
-    $("#todo-list").on("elementAdded.ic", function () {
+    todolist.on("elementAdded.ic", function () {
         $("[data-toggle='datepicker']").datepicker();
     });
+    $("[data-toggle='datepicker']").datepicker();
 });
 

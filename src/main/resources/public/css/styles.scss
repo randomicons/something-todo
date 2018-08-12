@@ -4,6 +4,7 @@ monospace;
 $title-font: "PT Mono",
 monospace;
 $primary-color: #222222;
+$primary-color-light: #8d8d8d;
 $secondary-color: #07bcad;
 $bg-color: #ffffff;
 $module-breakpoint: 20em;
@@ -67,7 +68,7 @@ header {
     @extend %mq-margin;
     width: 20em;
     padding: .5em;
-    padding-bottom: 0; // margin: 0 auto;
+    padding-bottom: .3em; // margin: 0 auto;
     //     border-bottom: 2px solid #a55252;
 }
 
@@ -120,10 +121,6 @@ h1 {
     @extend %todo-form-focus;
 }
 
-#todo-list li .view button {
-    visibility: hidden;
-}
-
 #todo-list {
     list-style: decimal;
 }
@@ -135,29 +132,32 @@ h1 {
 #todo-list input {
     border-bottom: 2px solid $bg-color;
 }
+
 .edit-task input:hover {
-    border-color: $secondary-color !important; 
+    border-color: $secondary-color !important;
 }
 
 #todo-list form>* {
-    padding: 0 .5em 0 0;
+    padding: 0 .5em 0 .5em;
 }
 
 .input-name {
     max-width: 70%;
-    padding: .5em;
 }
 
 .input-date {
     text-align: center;
-    padding-top: .5em;
-    color: #8d8d8d;
+    color: $primary-color-light;    
+
 }
 
 .input-date input {
     width: 5em;
+    padding: 0 .5em;
 }
-
+.pomo-countdown {
+    color: $primary-color-light;
+}
 #add-task input {
     border-bottom: 2px solid $secondary-color !important;
 }
@@ -169,9 +169,22 @@ h1 {
     height: 500px;
     border-left: 2px solid #c27070;
 }
-
 .focused {
     border-color: $secondary-color !important;
+}
+
+.actions {
+    visibility: hidden;
+}
+.actions input:hover {
+    background: #e3f8f8;
+}
+.actions>* {
+    width: 1em;
+    margin-left: 1em;
+    margin-top: .1em;
+    float: left;
+    padding: .2em;
 }
 
 // .focused {
