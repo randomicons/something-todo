@@ -3,7 +3,7 @@
     <form class="edit-task"
             ic-target="closest li"
             ic-put-to="/todos/$task.id"
-            ic-swap-style="append">
+            ic-swap-style="append">            
 
         <input
             ic-target="closest li"

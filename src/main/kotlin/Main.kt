@@ -30,20 +30,16 @@ object Main {
         } else staticFiles.location("/public")
         port(herokuAssignedPort)
 
-        // Render main UI
-        get("/") { req, res -> Render.main(req) }
 
+        get("/login") { req, res -> Render.login(req) }
+        // Render main UI
+        get("/:userId") { req, res -> Render.main(req) }
+        post("/login/:token") { req, res -> Render.verifyLogin(req) }
         // Add new
         post("/todos") { req, res ->
             Render.add(req)
             //     Render.todos(req)
         }
-
-//         // Remove all completed
-//         delete("/todos/completed") { req, res ->
-// //            TodoDao.removeCompleted()
-//             Render.todos(req)
-//         }
 
         // Remove by id
         delete("/todos/:id") { req, res ->
@@ -59,15 +55,9 @@ object Main {
         put("/todos/:id") { req, res ->
             Render.update(req)
         }
-
-//         // Toggle status by id
-//         put("/todos/:id/toggle_status") { req, res ->
-// //            TodoDao.toggleStatus(req.params("id"))
-//             Render.todos(req)
-//         }
         get("/todos/:id") { req, _ -> Render.task(req) }
 
-        post("/todos/:id/pomo/:time") { req, _ -> Render.addTime(req)}
+        post("/todos/:id/pomo/:time") { req, _ -> Render.addTime(req) }
 
     }
 

@@ -1,0 +1,45 @@
+<html>
+    <head>
+        <meta
+            name="google-signin-client_id"
+            content="307367576737-k2k7stsdnunrh06381aje0jspecn61sg.apps.googleusercontent.com">
+    </head>
+    <body>
+        <div id="my-signin2"></div>
+        <script>
+            function onSuccess(googleUser) {
+                console.log('Logged in as: ' + googleUser.getBasicProfile().getName());
+                // The ID token you need to pass to your backend:
+                var id_token = googleUser.getAuthResponse().id_token;
+                var xhr = new XMLHttpRequest();
+                xhr.open('POST', '/login/' + id_token);
+                xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+                xhr.onload = function () {
+                    if (xhr.responseText.startsWith("Success")) {
+                        window.location.replace("/" + xhr.responseText.split(":")[1]);
+                    }
+                }
+                xhr.send();
+            }
+            function onFailure(error) {
+                console.log(error);
+            }
+            function renderButton() {
+                gapi.signin2.render('my-signin2', {
+                        'scope': 'profile https://www.googleapis.com/auth/drive.appfolder',
+                        'width': 240,
+                        'height': 50,
+                        'longtitle': true,
+                        'theme': 'dark',
+                        'onsuccess': onSuccess,
+                        'onfailure': onFailure
+                    });
+            }
+        </script>
+
+        <script
+            src="https://apis.google.com/js/platform.js?onload=renderButton"
+            async="async"
+            defer="defer"></script>
+    </body>
+</html>

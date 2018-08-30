@@ -1,6 +1,6 @@
 <li>
     <div class="view">
-        <form id="add-task" ic-post-to="/todos" ic-target="closest li" ic-replace-target="true">
+        <form id="add-task"  ic-post-to="/todos" ic-target="closest li" ic-replace-target="true">
 
             <input class="input-name width-dynamic" placeholder="something?" name="task-name" autofocus="autofocus" filter=".+" >
             <label class="input-date">

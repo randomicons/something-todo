@@ -12,6 +12,7 @@
         <header>
             <h1>something todo</h1>
         </header>
+        <span ic-global-include='{"userId": "$userId"}' hidden> $userId </span>
         <main class="container">
             <ol id="todo-list">
                 #foreach($task in $todos)

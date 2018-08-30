@@ -4,7 +4,7 @@ import java.util.*
 import kotlin.concurrent.timer
 
 object Todo {
-    var list = mutableListOf<Task>()
+    var list = mutableMapOf<String, MutableList<Task>>()
     const val TASK_FILE_NAME = "task.bin"
     var pomoDuration = Duration.ofMinutes(1)
     var pomoTimeDone = Duration.ZERO
@@ -13,52 +13,55 @@ object Todo {
     var timer: Timer? = null
     val dateFormat = SimpleDateFormat("M-d-yy")
 
-    fun updateById(newName: String, date: Date?, id: String): Task {
-        val task = getTaskById(id)
+    fun loadUser(userId: String) {
+    }
+
+    fun updateById(newName: String, date: Date?, id: String, userId: String): Task {
+        val task = getTaskById(id, userId)
         task.dueDate = date
         task.name = newName
         return task
     }
 
-    fun addTimeById(id: String, time : Long) {
-        val task = getTaskById(id)
+    fun addTimeById(id: String, time: Long, userId: String) {
+        val task = getTaskById(id, userId)
         task.addTime(time)
     }
 
-    fun finTask(cm: String) {
-        val task = getTask(cm)
+    fun finTask(cm: String, userId: String) {
+        val task = getTask(cm, userId)
         task.completed = true
     }
 
-    fun delete(task: Task) {
-        list.remove(task)
+    fun delete(task: Task, userId: String) {
+        list[userId]?.remove(task)
     }
 
-    fun deleteById(id: String): Task {
-        val task = getTaskById(id)
-        delete(task)
+    fun deleteById(id: String, userId: String): Task {
+        val task = getTaskById(id, userId)
+        delete(task, userId)
         return task
     }
 
-    fun getTask(taskStr: String): Task {
+    fun getTask(taskStr: String, userId: String): Task {
         return if (taskStr.toIntOrNull() != null) {
-            list[taskStr.toInt()]
+            list[userId]!![taskStr.toInt()]
         } else {
-            list.first { it.name == taskStr }
+            list[userId]!!.first { it.name == taskStr }
         }
     }
 
-    fun getTaskById(taskStr: String): Task {
+    fun getTaskById(taskStr: String, userId: String): Task {
         val id = taskStr.toInt()
-        return list.find { id == it.id } ?: throw NoSuchElementException("$taskStr not found")
+        return list[userId]!!.find { id == it.id } ?: throw NoSuchElementException("$taskStr not found")
     }
 
     fun percentDone(): String {
         return "${pomoTimeDone.dividedBy(pomoDuration)} percent done"
     }
 
-    fun startTimer(cm: String) {
-        val task = getTask(cm)
+    fun startTimer(cm: String, userId: String) {
+        val task = getTask(cm, userId)
         if (timerRunning) {
             println("timer already running ${percentDone()}")
             return
@@ -80,16 +83,16 @@ object Todo {
         timerRunning = true
     }
 
-    fun printTasks() {
-        println("name 'due date' 'timespent' 'completed' ")
-        for ((i, l) in list.withIndex()) {
-            println("$i. $l")
-        }
-    }
+//    fun printTasks() {
+//        println("name 'due date' 'timespent' 'completed' ")
+//        for ((i, l) in list.withIndex()) {
+//            println("$i. $l")
+//        }
+//    }
 
-    fun addTask(name: String, date: Date?): Task {
+    fun addTask(name: String, date: Date?, userId: String): Task {
         val task = Task(name, date)
-        list.plusAssign(task)
+        list.getOrPut(userId) { mutableListOf() }.plusAssign(task)
         return task
     }
 
