@@ -1,51 +1,92 @@
-import com.google.api.client.googleapis.auth.oauth2.GoogleIdTokenVerifier
+import com.google.api.client.googleapis.auth.oauth2.GoogleAuthorizationCodeTokenRequest
+import com.google.api.client.googleapis.auth.oauth2.GoogleClientSecrets
+import com.google.api.client.googleapis.auth.oauth2.GoogleCredential
+import com.google.api.client.googleapis.javanet.GoogleNetHttpTransport
 import com.google.api.client.http.FileContent
 import com.google.api.client.http.javanet.NetHttpTransport
 import com.google.api.client.json.jackson2.JacksonFactory
+import com.google.api.services.drive.Drive
+import com.google.api.services.drive.model.File
 import spark.ModelAndView
 import spark.Request
 import spark.template.velocity.VelocityTemplateEngine
-//import com.google.api.services.drive.model.File
+import java.io.FileReader
 import java.text.ParseException
 import java.util.*
+import com.google.api.services.drive.model.FileList
+
+
 
 
 object Render {
 
-    val CLIENT_ID = "307367576737-k2k7stsdnunrh06381aje0jspecn61sg.apps.googleusercontent.com"
+    const val CLIENT_ID = "307367576737-k2k7stsdnunrh06381aje0jspecn61sg.apps.googleusercontent.com"
+    const val APPLICATION_NAME = "Something-Todo"
+    private val transport = GoogleNetHttpTransport.newTrustedTransport()
+    private val jsonFactory = JacksonFactory.getDefaultInstance()
+    private const val CREDENTIALS_FILE_PATH = "src/main/resources/credentials.json"
 
-    private val transport = NetHttpTransport()
-    private val jsonFactory = JacksonFactory()
+    private val CLIENT_SECRET_FILE = CREDENTIALS_FILE_PATH
 
-    var verifier = GoogleIdTokenVerifier.Builder(transport, jsonFactory)
-            // Specify the CLIENT_ID of the app that accesses the backend:
-            .setAudience(Collections.singletonList(CLIENT_ID))
-            // Or, if multiple clients access the backend:
-            //.setAudience(Arrays.asList(CLIENT_ID_1, CLIENT_ID_2, CLIENT_ID_3))
-            .build()
 
     fun verifyLogin(req: Request): String {
-        val idToken = verifier.verify(req.params("token"))
-        return if (idToken != null) {
-            val payload = idToken.payload
-            // Print user identifier
-            val userId = payload.subject
-            println("User ID: $userId logged in")
-//            val fileMetadata = File
-//            fileMetadata.setName("config.json")
-//            fileMetadata.setParents(Collections.singletonList("appDataFolder"))
-//            val filePath = java.io.File("files/config.json")
-//            val mediaContent = FileContent("application/json", filePath)
-//            val file = driveService.files().create(fileMetadata, mediaContent)
-//                    .setFields("id")
-//                    .execute()
-//            System.out.println("File ID: " + file.getId())
-
-            Todo.loadUser(userId)
-            "Success:$userId"
-        } else {
-            "invalid token"
+        if (req.headers("X-Requested-With") == null) {
+            println("header wrong")
+            return ""
         }
+        val authCode = req.body()
+        // Exchange auth code for access token
+        val clientSecrets = GoogleClientSecrets.load(
+                JacksonFactory.getDefaultInstance(), FileReader(CLIENT_SECRET_FILE))!!
+        val tokenResponse = GoogleAuthorizationCodeTokenRequest(
+                NetHttpTransport(),
+                JacksonFactory.getDefaultInstance(),
+                "https://www.googleapis.com/oauth2/v4/token",
+                clientSecrets.details.clientId,
+                clientSecrets.details.clientSecret,
+                authCode,
+                "postmessage")  // Specify the same redirect URI that you use with your web
+                // app. If you don't have a web version of your app, you can
+                // specify an empty string.
+                .execute()
+
+        val accessToken = tokenResponse.accessToken
+        val userId = tokenResponse.parseIdToken().payload.subject
+        // Use access token to call API
+        val credential = GoogleCredential().setAccessToken(accessToken)
+        val drive = Drive.Builder(NetHttpTransport(), JacksonFactory.getDefaultInstance(), credential)
+                .setApplicationName(APPLICATION_NAME)
+                .build()
+        var pageToken: String? = null
+        var file : File? = null
+        do {
+            val result = drive.files().list()
+                    .setQ("name='sometodo.txt'")
+                    .setSpaces("appDataFolder")
+                    .setFields("nextPageToken, files(id, name)")
+                    .setPageToken(pageToken)
+                    .execute()
+            for (f in result.files) {
+                System.out.printf("Found file: %s (%s)\n",
+                        f.name, f.id)
+                file = f
+            }
+            pageToken = result.getNextPageToken()
+        } while (pageToken != null)
+        if(file == null) {
+            val fileMetadata = File()
+            fileMetadata.name = "sometodo.txt"
+            fileMetadata.parents = Collections.singletonList("appDataFolder")
+            val filePath = java.io.File("sometodo.txt")
+            filePath.createNewFile()
+            val mediaContent = FileContent("text/plain", filePath)
+            file = drive.files().create(fileMetadata, mediaContent)
+                    .setFields("id")
+                    .execute()
+            Main.users[userId] = Pair(file.id, accessToken)
+        }
+        println(userId)
+        return userId
     }
 
     fun login(req: Request): String {

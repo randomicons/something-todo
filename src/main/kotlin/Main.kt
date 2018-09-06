@@ -6,6 +6,7 @@ import spark.Spark.*
 
 object Main {
 
+    val users = mutableMapOf<String, Pair<String, String>>()
     internal//return default port if heroku-port isn't set (i.e. on localhost)
     val herokuAssignedPort: Int
         get() {
@@ -17,7 +18,7 @@ object Main {
 
     @JvmStatic
     fun main(args: Array<String>) {
-        var localhost = false
+        var localhost = true
         exception(Exception::class.java) { e, req, res -> e.printStackTrace() } // print all exceptions
         Velocity.setProperty(RuntimeConstants.RESOURCE_LOADER, "classpath")
         Velocity.setProperty("classpath.resource.loader.class", ClasspathResourceLoader::class.java.name)
@@ -34,7 +35,7 @@ object Main {
         get("/login") { req, res -> Render.login(req) }
         // Render main UI
         get("/:userId") { req, res -> Render.main(req) }
-        post("/login/:token") { req, res -> Render.verifyLogin(req) }
+        post("/login/") { req, res -> Render.verifyLogin(req) }
         // Add new
         post("/todos") { req, res ->
             Render.add(req)

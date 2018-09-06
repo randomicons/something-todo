@@ -1,32 +1,32 @@
 <!doctype html>
 <html lang="en" data-framework="intercoolerjs">
-    <head>
-        <meta charset="utf-8">
-        <title>Something Todo</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link href="https://fonts.googleapis.com/css?family=Fira+Mono:400,700|PT+Mono" rel="stylesheet">
-        <link rel="stylesheet" href="/css/styles.css">
-        <link rel="stylesheet" href="/css/datepicker.min.css">
-    </head>
-    <body>
-        <header>
-            <h1>something todo</h1>
-        </header>
-        <span ic-global-include='{"userId": "$userId"}' hidden> $userId </span>
-        <main class="container">
-            <ol id="todo-list">
-                #foreach($task in $todos)
-                    #parse("velocity/edittask.vm") 
-                #end
-                #parse("velocity/addtask.vm") 
-            </ol>
-        </main>
-        <script src="/js/jquery-3.3.1.min.js"></script>
-        <script src="/js/intercooler-1.2.1.min.js"></script>
-        <script src="/js/datepicker.js"></script>
-        <script src="/js/pxem.jQuery.js"></script>
-        <script src="/js/width-dynamic.js"></script>
-        <script src="/js/pomo.js"></script>
-        <script src="/js/todo.js"></script>
-    </body>
+<head>
+    <meta charset="utf-8">
+    <title>Something Todo</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://fonts.googleapis.com/css?family=Fira+Mono:400,700|PT+Mono" rel="stylesheet">
+    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="stylesheet" href="/css/datepicker.min.css">
+</head>
+<body>
+<header>
+    <h1>something todo</h1>
+</header>
+<span ic-global-include='{"userId": "$userId"}' hidden> $userId </span>
+<main class="container">
+    <ol id="todo-list">
+        #foreach($task in $todos)
+        #parse("velocity/edittask.vm")
+        #end
+        #parse("velocity/addtask.vm")
+    </ol>
+</main>
+<script src="/js/jquery-3.3.1.min.js"></script>
+<script src="/js/intercooler-1.2.1.min.js"></script>
+<script src="/js/datepicker.js"></script>
+<script src="/js/pxem.jQuery.js"></script>
+<script src="/js/width-dynamic.js"></script>
+<script src="/js/pomo.js"></script>
+<script src="/js/todo.js"></script>
+</body>
 </html>
