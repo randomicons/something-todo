@@ -10,12 +10,10 @@ import com.google.api.services.drive.model.File
 import spark.ModelAndView
 import spark.Request
 import spark.template.velocity.VelocityTemplateEngine
+import java.io.ByteArrayOutputStream
 import java.io.FileReader
 import java.text.ParseException
 import java.util.*
-import com.google.api.services.drive.model.FileList
-
-
 
 
 object Render {
@@ -28,6 +26,28 @@ object Render {
 
     private val CLIENT_SECRET_FILE = CREDENTIALS_FILE_PATH
 
+
+    fun save(req: Request): String {
+//        println("users" + Main.users)
+//        println(req.params("userId"))
+        if (req.body() == "") return "Nothing to save"
+        val userId = req.params("userId")
+        val (fileId, accessToken) = Main.users[userId]!!
+        val cred = GoogleCredential().setAccessToken(accessToken)
+        val drive = Drive.Builder(NetHttpTransport(), JacksonFactory.getDefaultInstance(), cred)
+                .setApplicationName(APPLICATION_NAME)
+                .build()
+        val mediaContent = java.io.File("/tmp/sometodo-$userId.txt")
+        if (mediaContent.exists()) mediaContent.delete()
+        mediaContent.createNewFile()
+        mediaContent.writeText(req.body())
+
+        drive.files().delete(fileId).execute()
+        val file = createFile(drive, userId, mediaContent)
+        Main.users[userId] = Main.users[userId]!!.copy(first = file.id + "")
+        println(req.body())
+        return "save success"
+    }
 
     fun verifyLogin(req: Request): String {
         if (req.headers("X-Requested-With") == null) {
@@ -58,10 +78,12 @@ object Render {
                 .setApplicationName(APPLICATION_NAME)
                 .build()
         var pageToken: String? = null
-        var file : File? = null
+        var file: File? = null
+        // Find sometodo.txt and assign it to file if it exists
+        // That while is for going to "next page of search"
         do {
             val result = drive.files().list()
-                    .setQ("name='sometodo.txt'")
+                    .setQ("name='sometodo-$userId.txt'")
                     .setSpaces("appDataFolder")
                     .setFields("nextPageToken, files(id, name)")
                     .setPageToken(pageToken)
@@ -71,22 +93,35 @@ object Render {
                         f.name, f.id)
                 file = f
             }
-            pageToken = result.getNextPageToken()
+            pageToken = result.nextPageToken
         } while (pageToken != null)
-        if(file == null) {
-            val fileMetadata = File()
-            fileMetadata.name = "sometodo.txt"
-            fileMetadata.parents = Collections.singletonList("appDataFolder")
-            val filePath = java.io.File("sometodo.txt")
-            filePath.createNewFile()
-            val mediaContent = FileContent("text/plain", filePath)
-            file = drive.files().create(fileMetadata, mediaContent)
-                    .setFields("id")
-                    .execute()
-            Main.users[userId] = Pair(file.id, accessToken)
+        if (file != null) {
+            val outputStream = ByteArrayOutputStream()
+            drive.files().get(file.id)
+                    .executeMediaAndDownloadTo(outputStream)
+            val content = String(outputStream.toByteArray())
+            println("content: $content")
+            if (content != "")
+                Todo.loadUser(userId, content)
         }
+
+        val filePath = java.io.File("sometodo-$userId.txt")
+        filePath.createNewFile()
+        filePath.writeText("no data")
+        file = file ?: createFile(drive, userId, filePath)
+        Main.users[userId] = Pair(file.id, accessToken)
         println(userId)
         return userId
+    }
+
+    private fun createFile(drive: Drive, userId: String, filePath: java.io.File): File {
+        val fileMetadata = File()
+        fileMetadata.name = "sometodo-$userId.txt"
+        fileMetadata.parents = Collections.singletonList("appDataFolder")
+        val mediaContent = FileContent("text/plain", filePath)
+        return drive.files().create(fileMetadata, mediaContent)
+                .setFields("id")
+                .execute()
     }
 
     fun login(req: Request): String {
@@ -149,7 +184,6 @@ object Render {
     }
 
     fun main(req: Request): String {
-        Todo.loadUser(req.params("userId"))
         return template("velocity/index.vm", object : HashMap<String, Any>() {
             init {
                 this["todos"] = Todo.list.getOrPut(req.params("userId"), fun(): MutableList<Task> { return mutableListOf() })

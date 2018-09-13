@@ -13,7 +13,17 @@ object Todo {
     var timer: Timer? = null
     val dateFormat = SimpleDateFormat("M-d-yy")
 
-    fun loadUser(userId: String) {
+    fun loadUser(userId: String, content: String) {
+        val tasks = mutableListOf<Task>()
+        println(content)
+        content.trim().split("\n").forEach {
+            val arr = it.split(" ")
+            tasks += if (arr.size < 3)
+                Task(arr[1])
+            else
+                Task(arr[1], arr[2])
+        }
+        list[userId] = tasks
     }
 
     fun updateById(newName: String, date: Date?, id: String, userId: String): Task {

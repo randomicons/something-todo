@@ -18,7 +18,7 @@ object Main {
 
     @JvmStatic
     fun main(args: Array<String>) {
-        var localhost = true
+        var localhost = false
         exception(Exception::class.java) { e, req, res -> e.printStackTrace() } // print all exceptions
         Velocity.setProperty(RuntimeConstants.RESOURCE_LOADER, "classpath")
         Velocity.setProperty("classpath.resource.loader.class", ClasspathResourceLoader::class.java.name)
@@ -41,6 +41,8 @@ object Main {
             Render.add(req)
             //     Render.todos(req)
         }
+
+        post("/save/:userId") { req, _ -> Render.save(req) }
 
         // Remove by id
         delete("/todos/:id") { req, res ->

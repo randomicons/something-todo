@@ -7,16 +7,21 @@ open class Task(var name: String, var dueDate: Date? = null) : Serializable {
     var completed = false
     var pomoCount = 0
 
+    constructor (name: String, dateString: String) : this(name) {
+        this.dueDate = Todo.dateFormat.parse(dateString)
+    }
+
     init {
         Task.nextId++
     }
 
     val id = Task.nextId
 
-    fun addTime(secs : Long): Duration {
+    fun addTime(secs: Long): Duration {
         timeSpent = timeSpent.plusSeconds(secs)
         return timeSpent
     }
+
     override fun toString(): String {
         return "$name, ${dueDate ?: "''"}, $timeSpent, $completed"
     }
@@ -41,6 +46,7 @@ open class Task(var name: String, var dueDate: Date? = null) : Serializable {
     fun date(): String {
         return Todo.dateFormat.format(dueDate)
     }
+
     companion object {
         var nextId = 0
     }

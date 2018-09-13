@@ -31,5 +31,39 @@ $(document).ready(function () {
         $("[data-toggle='datepicker']").datepicker();
     });
     $("[data-toggle='datepicker']").datepicker();
+
+    function save() {
+        $.ajax({
+            type: 'POST',
+            url: 'save/' + userId,
+            // Always include an `X-Requested-With` header in every AJAX request,
+            // to protect against CSRF attacks.
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest'
+            },
+            contentType: 'application/json',
+            dataType: "json",
+            success: function (result) {
+                console.log("save sucesss" + result)
+            },
+            data: createSaveBody()
+        });
+    }
+    $(window).on('unload', function () {
+        save();
+    });
+
+    $("#save_button").click(function () {
+        save();
+    })
+
 });
 
+function createSaveBody() {
+    var out = ""
+    $(".edit-task").each(function (index, e) {
+        out += (index + 1) + ". " + $(e).find(".input-name").val();
+        out += " " + $(e).find(".input-date input").val() + "\n"
+    })
+    return out;
+}

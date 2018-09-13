@@ -52,11 +52,6 @@
     auth2.grantOfflineAccess().then(signInCallback);
   });
 
-
-
-
-
-
 </script>
 </body>
 </html>

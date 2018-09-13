@@ -13,6 +13,7 @@
     <h1>something todo</h1>
 </header>
 <span ic-global-include='{"userId": "$userId"}' hidden> $userId </span>
+<button id="save_button"> Save </button>
 <main class="container">
     <ol id="todo-list">
         #foreach($task in $todos)
@@ -27,6 +28,9 @@
 <script src="/js/pxem.jQuery.js"></script>
 <script src="/js/width-dynamic.js"></script>
 <script src="/js/pomo.js"></script>
+<script>
+const userId = "$userId"
+</script>
 <script src="/js/todo.js"></script>
 </body>
 </html>
