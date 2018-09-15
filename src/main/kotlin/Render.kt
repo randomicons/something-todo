@@ -1,6 +1,5 @@
-import com.google.api.client.googleapis.auth.oauth2.GoogleAuthorizationCodeTokenRequest
-import com.google.api.client.googleapis.auth.oauth2.GoogleClientSecrets
 import com.google.api.client.googleapis.auth.oauth2.GoogleCredential
+import com.google.api.client.googleapis.auth.oauth2.GoogleIdTokenVerifier
 import com.google.api.client.googleapis.javanet.GoogleNetHttpTransport
 import com.google.api.client.http.FileContent
 import com.google.api.client.http.javanet.NetHttpTransport
@@ -11,7 +10,6 @@ import spark.ModelAndView
 import spark.Request
 import spark.template.velocity.VelocityTemplateEngine
 import java.io.ByteArrayOutputStream
-import java.io.FileReader
 import java.text.ParseException
 import java.util.*
 
@@ -24,12 +22,18 @@ object Render {
     private val jsonFactory = JacksonFactory.getDefaultInstance()
     private const val CREDENTIALS_FILE_PATH = "src/main/resources/credentials.json"
 
+    const val EOF = "no data"
     private val CLIENT_SECRET_FILE = CREDENTIALS_FILE_PATH
+
+    val verifier = GoogleIdTokenVerifier.Builder(transport, jsonFactory)
+            // Specify the CLIENT_ID of the app that accesses the backend:
+            .setAudience(Collections.singletonList(CLIENT_ID))
+            // Or, if multiple clients access the backend:
+            //.setAudience(Arrays.asList(CLIENT_ID_1, CLIENT_ID_2, CLIENT_ID_3))
+            .build()
 
 
     fun save(req: Request): String {
-//        println("users" + Main.users)
-//        println(req.params("userId"))
         if (req.body() == "") return "Nothing to save"
         val userId = req.params("userId")
         val (fileId, accessToken) = Main.users[userId]!!
@@ -50,29 +54,32 @@ object Render {
     }
 
     fun verifyLogin(req: Request): String {
-        if (req.headers("X-Requested-With") == null) {
-            println("header wrong")
-            return ""
-        }
-        val authCode = req.body()
-        // Exchange auth code for access token
-        val clientSecrets = GoogleClientSecrets.load(
-                JacksonFactory.getDefaultInstance(), FileReader(CLIENT_SECRET_FILE))!!
-        val tokenResponse = GoogleAuthorizationCodeTokenRequest(
-                NetHttpTransport(),
-                JacksonFactory.getDefaultInstance(),
-                "https://www.googleapis.com/oauth2/v4/token",
-                clientSecrets.details.clientId,
-                clientSecrets.details.clientSecret,
-                authCode,
-                "postmessage")  // Specify the same redirect URI that you use with your web
-                // app. If you don't have a web version of your app, you can
-                // specify an empty string.
-                .execute()
 
-        val accessToken = tokenResponse.accessToken
-        val userId = tokenResponse.parseIdToken().payload.subject
+//        val authCode = req.body()
+//        // Exchange auth code for access token
+//        val clientSecrets = GoogleClientSecrets.load(
+//                JacksonFactory.getDefaultInstance(), FileReader(CLIENT_SECRET_FILE))!!
+//        val tokenResponse = GoogleAuthorizationCodeTokenRequest(
+//                NetHttpTransport(),
+//                JacksonFactory.getDefaultInstance(),
+//                "https://www.googleapis.com/oauth2/v4/token",
+//                clientSecrets.details.clientId,
+//                clientSecrets.details.clientSecret,
+//                authCode,
+//                "postmessage")  // Specify the same redirect URI that you use with your web
+//                // app. If you don't have a web version of your app, you can
+//                // specify an empty string.
+//                .execute()
+//
+//        val accessToken = tokenResponse.accessToken
+//        val userId = tokenResponse.parseIdToken().payload.subject
         // Use access token to call API
+        println(req.body())
+        val body = req.body().trim().split("\n")
+        val accessToken = body[0]
+        val idToken = verifier.verify(body[1]) ?: return "Id can't be verified"
+        val userId = idToken.payload.subject
+
         val credential = GoogleCredential().setAccessToken(accessToken)
         val drive = Drive.Builder(NetHttpTransport(), JacksonFactory.getDefaultInstance(), credential)
                 .setApplicationName(APPLICATION_NAME)
@@ -101,17 +108,23 @@ object Render {
                     .executeMediaAndDownloadTo(outputStream)
             val content = String(outputStream.toByteArray())
             println("content: $content")
-            if (content != "")
+            if (content != EOF)
                 Todo.loadUser(userId, content)
+        } else {
+            val filePath = java.io.File("sometodo-$userId.txt")
+            filePath.createNewFile()
+            filePath.writeText(EOF)
+            file = file ?: createFile(drive, userId, filePath)
         }
-
-        val filePath = java.io.File("sometodo-$userId.txt")
-        filePath.createNewFile()
-        filePath.writeText("no data")
-        file = file ?: createFile(drive, userId, filePath)
         Main.users[userId] = Pair(file.id, accessToken)
-        println(userId)
-        return userId
+        println("loggedin $userId")
+
+        return userId + "\n" + template("velocity/content.vm", object : HashMap<String, Any>() {
+            init {
+                this["todos"] = Todo.list.getOrPut(userId, fun(): MutableList<Task> { return mutableListOf() })
+                this["userId"] = userId
+            }
+        })
     }
 
     private fun createFile(drive: Drive, userId: String, filePath: java.io.File): File {
@@ -124,10 +137,10 @@ object Render {
                 .execute()
     }
 
-    fun login(req: Request): String {
-        return template("velocity/login.vm", object : HashMap<String, Any>() {
-        })
-    }
+//    fun login(req: Request): String {
+//        return template("velocity/login.vm", object : HashMap<String, Any>() {
+//        })
+//    }
 
     fun update(req: Request): String {
         val date: Date? = try {
@@ -179,15 +192,13 @@ object Render {
 //        })
 //    }
     private fun getUserId(req: Request): String {
-        println("userid= ${req.queryParams("userId")}")
         return req.queryParams("userId")
     }
 
     fun main(req: Request): String {
         return template("velocity/index.vm", object : HashMap<String, Any>() {
             init {
-                this["todos"] = Todo.list.getOrPut(req.params("userId"), fun(): MutableList<Task> { return mutableListOf() })
-                this["userId"] = req.params("userId")
+                this["todos"] = mutableListOf<Task>()
             }
         })
     }

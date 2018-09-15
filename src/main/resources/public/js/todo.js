@@ -4,8 +4,33 @@ $.fn.datepicker.setDefaults({
     startDate: new Date()
 });
 
+var userId;
 
-$(document).ready(function () {
+function onSignIn(authResult) {
+    $.ajax({
+        type: 'POST',
+        url: '/',
+        // Always include an `X-Requested-With` header in every AJAX request,
+        // to protect against CSRF attacks.
+        headers: {
+            'X-Requested-With': 'XMLHttpRequest'
+        },
+        contentType: 'application/octet-stream; charset=utf-8',
+        success: function (result) {
+            userId = result.split("\n", 1)[0]
+            $("main").html(result.substring(result.indexOf("\n") + 1))
+            Intercooler.processNodes($("main"))
+            setTodoListBindings()
+        },
+        processData: false,
+        data: authResult.getAuthResponse().access_token + "\n" +
+            authResult.getAuthResponse().id_token
+    });
+
+
+}
+
+function setTodoListBindings() {
 
     var todolist = $("#todo-list");
 
@@ -32,38 +57,45 @@ $(document).ready(function () {
     });
     $("[data-toggle='datepicker']").datepicker();
 
-    function save() {
-        $.ajax({
-            type: 'POST',
-            url: 'save/' + userId,
-            // Always include an `X-Requested-With` header in every AJAX request,
-            // to protect against CSRF attacks.
-            headers: {
-                'X-Requested-With': 'XMLHttpRequest'
-            },
-            contentType: 'application/json',
-            dataType: "json",
-            success: function (result) {
-                console.log("save sucesss" + result)
-            },
-            data: createSaveBody()
-        });
-    }
-    $(window).on('unload', function () {
-        save();
-    });
-
     $("#save_button").click(function () {
         save();
     })
 
-});
+}
+
+function save() {
+    $.ajax({
+        type: 'POST',
+        url: 'save/' + userId,
+        // Always include an `X-Requested-With` header in every AJAX request,
+        // to protect against CSRF attacks.
+        headers: {
+            'X-Requested-With': 'XMLHttpRequest'
+        },
+        contentType: 'application/json',
+        dataType: "json",
+        success: function (result) {
+            console.log("save sucesss" + result)
+        },
+        data: createSaveBody()
+    });
+}
+
+function setBindings() {
+    setTodoListBindings()
+    $(window).on('unload', function () {
+        save();
+    });
+
+}
 
 function createSaveBody() {
     var out = ""
     $(".edit-task").each(function (index, e) {
         out += (index + 1) + ". " + $(e).find(".input-name").val();
-        out += " " + $(e).find(".input-date input").val() + "\n"
+        out += " date: " + $(e).find(".input-date input").val() + "\n"
     })
     return out;
 }
+
+$(document).ready(setBindings());

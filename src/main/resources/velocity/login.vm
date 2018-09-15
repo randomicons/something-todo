@@ -3,8 +3,7 @@
     <!-- BEGIN Pre-requisites -->
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js">
     </script>
-    <script src="https://apis.google.com/js/client:platform.js?onload=start" async defer>
-    </script>
+    <script src="https://apis.google.com/js/client:platform.js?onload=start" async defer> </script>
     <!-- END Pre-requisites -->
     <script>
     function start() {
@@ -23,33 +22,28 @@
 <button id="signinButton">Google Sign in </button>
 <script>
     function signInCallback(authResult) {
-      if (authResult['code']) {
-
         // Hide the sign-in button now that the user is authorized, for example:
-        $('#signinButton').attr('style', 'display: none');
+      $('#signinButton').attr('style', 'display: none');
 
-        // Send the code to the server
-        $.ajax({
-          type: 'POST',
-          url: 'login/',
-          // Always include an `X-Requested-With` header in every AJAX request,
-          // to protect against CSRF attacks.
-          headers: {
-            'X-Requested-With': 'XMLHttpRequest'
-          },
-          contentType: 'application/octet-stream; charset=utf-8',
-          success: function(result) {
-            window.location.replace("/" + result)
-          },
-          processData: false,
-          data: authResult['code']
+      // Send the code to the server
+      $.ajax({
+        type: 'POST',
+        url: 'login/',
+        // Always include an `X-Requested-With` header in every AJAX request,
+        // to protect against CSRF attacks.
+        headers: {
+          'X-Requested-With': 'XMLHttpRequest'
+        },
+        contentType: 'application/octet-stream; charset=utf-8',
+        success: function(result) {
+          window.location.replace("/" + result)
+        },
+        processData: false,
+        data: authResult.getAuthResponse().access_token + "\n" + authResult.getBasicProfile().getId()
         });
-      } else {
-        // There was an error.
-      }
     }
   $('#signinButton').click(function() {
-    auth2.grantOfflineAccess().then(signInCallback);
+    auth2.signIn({prompt: 'consent'}).then(signInCallback);
   });
 
 </script>

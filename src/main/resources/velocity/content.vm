@@ -1,0 +1,12 @@
+<span ic-global-include='{"userId": "$userId"}' hidden> $userId </span>
+#if(!$userId)
+    <div class="g-signin2" data-onsuccess="onSignIn" data-theme="dark"></div>
+#else
+    <button id="save_button"> Save </button>
+#end
+<ol id="todo-list">
+    #foreach($task in $todos)
+        #parse("velocity/edittask.vm")
+    #end
+    #parse("velocity/addtask.vm")
+</ol>

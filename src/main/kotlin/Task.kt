@@ -6,6 +6,7 @@ open class Task(var name: String, var dueDate: Date? = null) : Serializable {
     var timeSpent: Duration = Duration.ZERO
     var completed = false
     var pomoCount = 0
+    val id = Task.nextId
 
     constructor (name: String, dateString: String) : this(name) {
         this.dueDate = Todo.dateFormat.parse(dateString)
@@ -15,7 +16,6 @@ open class Task(var name: String, var dueDate: Date? = null) : Serializable {
         Task.nextId++
     }
 
-    val id = Task.nextId
 
     fun addTime(secs: Long): Duration {
         timeSpent = timeSpent.plusSeconds(secs)
@@ -23,7 +23,7 @@ open class Task(var name: String, var dueDate: Date? = null) : Serializable {
     }
 
     override fun toString(): String {
-        return "$name, ${dueDate ?: "''"}, $timeSpent, $completed"
+        return "$id $name, ${dueDate ?: "''"}, $timeSpent, $completed"
     }
 
     override fun equals(other: Any?): Boolean {

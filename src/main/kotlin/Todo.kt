@@ -1,3 +1,4 @@
+import Render.EOF
 import java.text.SimpleDateFormat
 import java.time.Duration
 import java.util.*
@@ -15,13 +16,26 @@ object Todo {
 
     fun loadUser(userId: String, content: String) {
         val tasks = mutableListOf<Task>()
-        println(content)
-        content.trim().split("\n").forEach {
-            val arr = it.split(" ")
-            tasks += if (arr.size < 3)
-                Task(arr[1])
-            else
-                Task(arr[1], arr[2])
+        content.trim().split("\n").forEach { line ->
+            if (line == EOF) return@forEach
+            val sc = Scanner(line)
+            sc.next()
+            var name = ""
+            var next: String
+            var date: String? = null
+            while (sc.hasNext()) {
+                next = sc.next()
+                if (next == "date:") {
+                    date = if (sc.hasNext()) sc.next() else null
+                    break
+                }
+                name += next
+            }
+            tasks.add(if (date != null) {
+                Task(name, date)
+            } else {
+                Task(name)
+            })
         }
         list[userId] = tasks
     }
@@ -63,6 +77,7 @@ object Todo {
 
     fun getTaskById(taskStr: String, userId: String): Task {
         val id = taskStr.toInt()
+        println(list[userId]!!)
         return list[userId]!!.find { id == it.id } ?: throw NoSuchElementException("$taskStr not found")
     }
 

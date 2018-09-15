@@ -32,10 +32,10 @@ object Main {
         port(herokuAssignedPort)
 
 
-        get("/login") { req, res -> Render.login(req) }
+//        get("/login") { req, res -> Render.login(req) }
         // Render main UI
-        get("/:userId") { req, res -> Render.main(req) }
-        post("/login/") { req, res -> Render.verifyLogin(req) }
+        get("/") { req, _ -> Render.main(req) }
+        post("/") { req, res -> Render.verifyLogin(req) }
         // Add new
         post("/todos") { req, res ->
             Render.add(req)
