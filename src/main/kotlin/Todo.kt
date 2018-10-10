@@ -27,9 +27,10 @@ object Todo {
                 next = sc.next()
                 if (next == "date:") {
                     date = if (sc.hasNext()) sc.next() else null
+                    if (date?.trim() == "") date = null
                     break
                 }
-                name += next
+                name += "$next "
             }
             tasks.add(if (date != null) {
                 Task(name, date)

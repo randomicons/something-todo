@@ -114,7 +114,7 @@ body, #add-task input,
 
 @media (min-width: 120em) {
   header, .container {
-    margin: 0 30%;
+    margin: 0 24%;
   }
 }
 
@@ -130,18 +130,17 @@ header {
 
 h1 {
   font-family: "PT Mono", monospace;
-  font-size: 2em;
+  font-size: 1.5em;
   text-transform: capitalize;
+  color: #222222;
 }
 
-#todo-list {
-  width: 100%;
+h1:nth-child(1) {
+  color: #07bcad;
 }
 
-#todo-list form {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
+h1:nth-child(2) {
+  color: #07bcad;
 }
 
 #add-task input,
@@ -163,7 +162,14 @@ h1 {
 }
 
 #todo-list {
-  list-style: decimal;
+  width: 100%;
+  list-style: disc;
+}
+
+#todo-list form {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
 }
 
 #todo-list li {
@@ -210,6 +216,7 @@ h1 {
   top: 10%;
   height: 500px;
   border-left: 2px solid #c27070;
+  width: 1px;
 }
 
 .focused {

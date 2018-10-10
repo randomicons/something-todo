@@ -1,10 +1,6 @@
 <li>
-    ## <form id="edit-todo" ic-replace-target="true" ic-target="closest li" ic-put-to="/todos/$todo.id">
-    <form class="edit-task"
-            ic-target="closest li"
-            ic-put-to="/todos/$task.id"
-            ic-swap-style="append">            
-
+    <form class="edit-task" ic-target="closest li"
+        ic-put-to="/todos/$task.id" ic-swap-style="append">            
         <input
             ic-target="closest li"
             ic-trigger-on="blur"
@@ -25,20 +21,29 @@
         ##     placeholder="date"
         ##     value="$todo.name"/>
         ## <input class="edit-name" name="todo-name" value="$todo.name" pattern=".+"/>
-        <label class="input-date">
+        <label class="input-date"
+            #if(!$task.dueDate || $task.dueDate.trim() == "")
+                style="visibility:hidden"
+            #end
+            >
             due by
             <input
                 ic-target="closest li"
                 ic-trigger-on="blur"
                 ic-put-to="/todos/$task.id"
                 data-toggle="datepicker"
-                placeholder="m-d-yyyy"
+                placeholder="m-d-yy"
                 name="task-date"
                 #if($task.dueDate)
-                    value="$task.date()"
+                    value="$task.dueDate.trim()"
                 #end>
         </label>
-        <span class="pomo-countdown"></span>    
+        <span class="pomo-countdown"></span>
+        <input type="submit" style="display:none"    
+            ic-target="closest li"
+            ic-put-to="/todos/$task.id"
+            ic-swap-style="append"
+            ic-on-success=blurOnSubmit()>            
         <div class="actions">
             <input type="image"
                 class="button-delete"

@@ -34,6 +34,8 @@ object Render {
 
 
     fun save(req: Request): String {
+        //TODO: Put actual saving part in another
+        // TODO: Make another thread that auto saves every once in a while
         if (req.body() == "") return "Nothing to save"
         val userId = req.params("userId")
         val (fileId, accessToken) = Main.users[userId]!!
@@ -49,7 +51,7 @@ object Render {
         drive.files().delete(fileId).execute()
         val file = createFile(drive, userId, mediaContent)
         Main.users[userId] = Main.users[userId]!!.copy(first = file.id + "")
-        println(req.body())
+        println("saved")
         return "save success"
     }
 

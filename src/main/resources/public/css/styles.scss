@@ -6,6 +6,7 @@ monospace;
 $primary-color: #222222;
 $primary-color-light: #8d8d8d;
 $secondary-color: #07bcad;
+$red: #c27070;
 $bg-color: #ffffff;
 $module-breakpoint: 20em;
 // Breakpoints
@@ -55,7 +56,7 @@ $base-font-size: 1em;
         margin: 0 18%;
     }
     @media #{$mq-xlarge} {
-        margin: 0 30%;
+        margin: 0 24%;
     }
 }
 
@@ -79,18 +80,20 @@ header {
 
 h1 {
     font-family: $title-font;
-    font-size: 2em; // text-decoration: underline;
+    font-size: 1.5em; // text-decoration: underline;
     text-transform: capitalize;
+    color: $primary-color;
 }
 
-#todo-list {
-    width: 100%;
+main {
 }
 
-#todo-list form {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
+h1:nth-child(1) {
+    color: $secondary-color;
+}
+
+h1:nth-child(2) {
+    color: $secondary-color;
 }
 
 %todo-form {
@@ -122,7 +125,14 @@ h1 {
 }
 
 #todo-list {
-    list-style: decimal;
+    width: 100%;
+    list-style: disc;
+}
+
+#todo-list form {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
 }
 
 #todo-list li {
@@ -147,17 +157,18 @@ h1 {
 
 .input-date {
     text-align: center;
-    color: $primary-color-light;    
-
+    color: $primary-color-light;
 }
 
 .input-date input {
     width: 5em;
     padding: 0 .5em;
 }
+
 .pomo-countdown {
     color: $primary-color-light;
 }
+
 #add-task input {
     border-bottom: 2px solid $secondary-color !important;
 }
@@ -168,7 +179,9 @@ h1 {
     top: 10%;
     height: 500px;
     border-left: 2px solid #c27070;
+    width: 1px;
 }
+
 .focused {
     border-color: $secondary-color !important;
 }
@@ -176,9 +189,11 @@ h1 {
 .actions {
     visibility: hidden;
 }
+
 .actions input:hover {
     background: #e3f8f8;
 }
+
 .actions>* {
     width: 1em;
     margin-left: 1em;

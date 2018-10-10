@@ -1,14 +1,11 @@
-// const POMO_DURATION = 25 * 60;
-const POMO_DURATION = 10;
+const POMO_DURATION = 25 * 60;
+// const POMO_DURATION = 10;
 
 var pomoComplete = 0;
 var curTaskTime = 0;
 var curTask = null;
 var timerRunning = false;
 $(document).ready(function () {
-    $("#todo-list").on("click", ".button-pomo", function () {
-        startPomo($(this).closest("li"));
-    });
 });
 
 function postPomo(curTask) {
@@ -42,7 +39,7 @@ function startPomo(task) {
             curTask.css("background", "linear-gradient(90deg, #e3f8f8 " + percentDone + "%, #fce4e8 " + percentDone + "%)");
             var minleft = Math.floor((POMO_DURATION - pomoComplete) / 60);
             var secleft = (POMO_DURATION - pomoComplete) % 60;
-            if(secleft < 10) secleft = "0" + secleft;
+            if (secleft < 10) secleft = "0" + secleft;
             curTask.find(".pomo-countdown").html("" + minleft + ":" + secleft);
         }, 1000)
     }
