@@ -5,7 +5,7 @@ $title-font: "PT Mono",
 monospace;
 $primary-color: #222222;
 $primary-color-light: #8d8d8d;
-$secondary-color: #07bcad;
+$secondary-color: #71bbb5;
 $red: #c27070;
 $bg-color: #ffffff;
 $module-breakpoint: 20em;
@@ -85,8 +85,21 @@ h1 {
     color: $primary-color;
 }
 
-main {
+button {
+    background: $secondary-color;
+    border-radius: .2rem;
+    border: none;
+    color: white;
+    min-width: 3em;
+    margin-left: 1em;
 }
+
+button:hover {
+    transition: background .2s ease-in;
+    background: #59928d;
+}
+
+main {}
 
 h1:nth-child(1) {
     color: $secondary-color;
@@ -94,6 +107,39 @@ h1:nth-child(1) {
 
 h1:nth-child(2) {
     color: $secondary-color;
+}
+
+#todo-list {
+    width: 100%;
+    list-style: disc;
+}
+
+#todo-list form {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+#todo-list li {
+    padding: .5rem;
+}
+
+#todo-list li:hover {
+    transition: background .3s ease-in;
+    background: #e3f8f8;
+}
+
+#todo-list input {
+    border-bottom: 2px solid $bg-color;
+}
+
+.edit-task input:hover {
+    border-color: $primary-color-light;
+    transition: border-color .2s ease-in;
+}
+
+#todo-list form>* {
+    padding: 0 .5em 0 .5em;
 }
 
 %todo-form {
@@ -124,35 +170,8 @@ h1:nth-child(2) {
     @extend %todo-form-focus;
 }
 
-#todo-list {
-    width: 100%;
-    list-style: disc;
-}
-
-#todo-list form {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-}
-
-#todo-list li {
-    padding: .5rem;
-}
-
-#todo-list input {
-    border-bottom: 2px solid $bg-color;
-}
-
-.edit-task input:hover {
-    border-color: $secondary-color !important;
-}
-
-#todo-list form>* {
-    padding: 0 .5em 0 .5em;
-}
-
 .input-name {
-    max-width: 70%;
+
 }
 
 .input-date {
@@ -183,23 +202,27 @@ h1:nth-child(2) {
 }
 
 .focused {
-    border-color: $secondary-color !important;
+    // border-color: $secondary-color !important;
 }
 
 .actions {
     visibility: hidden;
 }
 
-.actions input:hover {
-    background: #e3f8f8;
+.actions i:hover {
+    transition: all .15s easein;
+    color: #cf6262;
+}
+
+.actions i {
+    display: inline-block;
+    cursor: pointer;
+    color: $primary-color-light;
 }
 
 .actions>* {
-    width: 1em;
-    margin-left: 1em;
-    margin-top: .1em;
     float: left;
-    padding: .2em;
+    padding: .3em;
 }
 
 // .focused {

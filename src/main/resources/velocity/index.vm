@@ -6,7 +6,11 @@
     <meta name="google-signin-scope" content="profile email https://www.googleapis.com/auth/drive.appfolder">
     <meta name="google-signin-client_id" content="307367576737-k2k7stsdnunrh06381aje0jspecn61sg.apps.googleusercontent.com">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link href="https://fonts.googleapis.com/css?family=Fira+Mono:400,700|PT+Mono" rel="stylesheet">
+    <link
+    href="https://fonts.googleapis.com/css?family=Fira+Mono:400,700|PT+Mono"
+    rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet">
     <link rel="stylesheet" href="/css/styles.css">
     <link rel="stylesheet" href="/css/datepicker.min.css">
 </head>

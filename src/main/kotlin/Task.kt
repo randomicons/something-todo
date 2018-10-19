@@ -1,21 +1,19 @@
+import com.beust.klaxon.Json
 import java.io.Serializable
 import java.time.Duration
 import java.util.*
 
-open class Task(var name: String, var dueDate: Date? = null) : Serializable {
+
+open class Task(var name: String, var pomoCount: Int = 0, @Json(ignored = true) var dueDate: Date? = null, val idx: Int) : Serializable {
+    @Json(ignored = true)
     var timeSpent: Duration = Duration.ZERO
     var completed = false
-    var pomoCount = 0
-    val id = Task.nextId
+    var dateStr = ""
 
-    constructor (name: String, dateString: String) : this(name) {
-        this.dueDate = Todo.dateFormat.parse(dateString)
-    }
-
-    init {
-        Task.nextId++
-    }
-
+//    constructor (name: String, pomoCount: Int, dateString: String) : this(name, pomoCount) {
+//        this.dueDate = Todo.dateFormat.parse(dateString)
+//        this.dateStr = dateString
+//    }
 
     fun addTime(secs: Long): Duration {
         timeSpent = timeSpent.plusSeconds(secs)
@@ -23,7 +21,7 @@ open class Task(var name: String, var dueDate: Date? = null) : Serializable {
     }
 
     override fun toString(): String {
-        return "$id $name, ${dueDate ?: "''"}, $timeSpent, $completed"
+        return "$name, ${dueDate ?: "''"}, $timeSpent, $completed"
     }
 
     override fun equals(other: Any?): Boolean {
@@ -45,9 +43,5 @@ open class Task(var name: String, var dueDate: Date? = null) : Serializable {
 
     fun date(): String {
         return Todo.dateFormat.format(dueDate)
-    }
-
-    companion object {
-        var nextId = 0
     }
 }

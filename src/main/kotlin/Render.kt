@@ -123,7 +123,7 @@ object Render {
 
         return userId + "\n" + template("velocity/content.vm", object : HashMap<String, Any>() {
             init {
-                this["todos"] = Todo.list.getOrPut(userId, fun(): MutableList<Task> { return mutableListOf() })
+                this["todos"] = Todo.list.getOrPut(userId, fun(): MutableMap<Int, Task> { return mutableMapOf() }).values.filter { !it.completed }
                 this["userId"] = userId
             }
         })

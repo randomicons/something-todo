@@ -51,6 +51,7 @@ function setTodoListBindings() {
 
     var todolist = $("#todo-list");
 
+    //Won't work if date is edited in, instead of loaded in
     todolist.on("mouseover", "li", function () {
         $(this).find(".actions").css("visibility", "visible");
         if ($(this).find(".input-date").css("visibility") == "hidden") {
@@ -76,6 +77,7 @@ function setTodoListBindings() {
 
     todolist.on("blur", ".edit-task input", function () {
         $(this).removeClass("focused");
+        focusedTask = null;
     });
 
     todolist.on("elementAdded.ic", function () {
@@ -133,14 +135,24 @@ function setBindings() {
     });
 
 }
-
 function createSaveBody() {
-    var out = ""
+    todos = []
     $(".edit-task").each(function (index, e) {
-        out += (index + 1) + ". " + $(e).find(".input-name").val();
-        out += " date: " + $(e).find(".input-date input").val() + "\n"
+        task = {
+            idx: index,
+            completed: false,
+            name: $(e).find(".input-name").val(),
+            pomoCount: $(e).find(".pomo-complete-cnt").val(),
+            dateStr: $(e).find(".input-date input").val(),
+        }
+        if (task.pomoCount == "") task.pomoCount = 0
+        // if (task.date == "") task.date = null
+
+        todos.push(task)
     })
-    return out;
+
+    console.log(JSON.stringify(todos))
+    return JSON.stringify(todos);
 }
 
 $(document).ready(setBindings());

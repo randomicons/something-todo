@@ -135,12 +135,59 @@ h1 {
   color: #222222;
 }
 
+button {
+  background: #71bbb5;
+  border-radius: .2rem;
+  border: none;
+  color: white;
+  min-width: 3em;
+  margin-left: 1em;
+}
+
+button:hover {
+  transition: background .2s ease-in;
+  background: #59928d;
+}
+
 h1:nth-child(1) {
-  color: #07bcad;
+  color: #71bbb5;
 }
 
 h1:nth-child(2) {
-  color: #07bcad;
+  color: #71bbb5;
+}
+
+#todo-list {
+  width: 100%;
+  list-style: disc;
+}
+
+#todo-list form {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+#todo-list li {
+  padding: .5rem;
+}
+
+#todo-list li:hover {
+  transition: background .3s ease-in;
+  background: #e3f8f8;
+}
+
+#todo-list input {
+  border-bottom: 2px solid #ffffff;
+}
+
+.edit-task input:hover {
+  border-color: #8d8d8d;
+  transition: border-color .2s ease-in;
+}
+
+#todo-list form > * {
+  padding: 0 .5em 0 .5em;
 }
 
 #add-task input,
@@ -161,37 +208,6 @@ h1:nth-child(2) {
   font-family: inherit;
 }
 
-#todo-list {
-  width: 100%;
-  list-style: disc;
-}
-
-#todo-list form {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-}
-
-#todo-list li {
-  padding: .5rem;
-}
-
-#todo-list input {
-  border-bottom: 2px solid #ffffff;
-}
-
-.edit-task input:hover {
-  border-color: #07bcad !important;
-}
-
-#todo-list form > * {
-  padding: 0 .5em 0 .5em;
-}
-
-.input-name {
-  max-width: 70%;
-}
-
 .input-date {
   text-align: center;
   color: #8d8d8d;
@@ -207,7 +223,7 @@ h1:nth-child(2) {
 }
 
 #add-task input {
-  border-bottom: 2px solid #07bcad !important;
+  border-bottom: 2px solid #71bbb5 !important;
 }
 
 #line {
@@ -219,24 +235,24 @@ h1:nth-child(2) {
   width: 1px;
 }
 
-.focused {
-  border-color: #07bcad !important;
-}
-
 .actions {
   visibility: hidden;
 }
 
-.actions input:hover {
-  background: #e3f8f8;
+.actions i:hover {
+  transition: all .15s easein;
+  color: #cf6262;
+}
+
+.actions i {
+  display: inline-block;
+  cursor: pointer;
+  color: #8d8d8d;
 }
 
 .actions > * {
-  width: 1em;
-  margin-left: 1em;
-  margin-top: .1em;
   float: left;
-  padding: .2em;
+  padding: .3em;
 }
 
 .ic-removing {
